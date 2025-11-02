@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://qln4pk71gpli"]
+
+[ext_resource type="Script" uid="uid://b52ptuas6upr" path="res://scripts/start_button.gd" id="1_fgkus"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fgkus"]
+font_size = 48
+
+[node name="TitleScreen" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -346.0
+offset_top = -140.0
+offset_right = 347.0
+offset_bottom = -73.0
+text = "HELLO THIS IS A TITLE SCREEN"
+label_settings = SubResource("LabelSettings_fgkus")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = -68.0
+offset_top = -27.0
+offset_right = 65.0
+offset_bottom = 45.0
+text = "Start Game"
+script = ExtResource("1_fgkus")
+
+[connection signal="pressed" from="StartButton" to="StartButton" method="_on_pressed"]
