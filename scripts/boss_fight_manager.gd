@@ -118,11 +118,11 @@ func _wait_for_space() -> void:
 		if Input.is_action_just_pressed("ui_accept"):
 			return
 
-#boss turn; attacks randomly based on number of coins
-#need to add coins having their own skills and targeting and stuff
+#boss turn; attacks randomly based on number of skill slots
+#need to add skill slots having their own skills and targeting and stuff
 func _boss_turn(boss_ent: Entity) -> void:
 	await get_tree().create_timer(0.5).timeout
-	for i in range(boss_ent.coins):
+	for i in range(boss_ent.skill_slots):
 		var target = randi_range(0, 1)
 		print ("boss attacks ", players[target].name)
 		players[target].take_damage(5)
