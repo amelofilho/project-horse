@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://sfsrb46ufhh0"]
+[gd_scene load_steps=6 format=3 uid="uid://sfsrb46ufhh0"]
 
 [ext_resource type="Script" uid="uid://c8xl5gilwultu" path="res://scripts/entities/boss.gd" id="1_mdhvr"]
 [ext_resource type="Texture2D" uid="uid://c6f2iduw0xyl4" path="res://icon.svg" id="2_ac02r"]
+[ext_resource type="PackedScene" uid="uid://kyry78favrgh" path="res://scenes/UI/boss_skills_bar.tscn" id="3_ac02r"]
+[ext_resource type="PackedScene" uid="uid://dlhdnhe4yr8gw" path="res://scenes/UI/entity_health_bar.tscn" id="4_g24gc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sh265"]
 radius = 87.0
@@ -19,3 +21,19 @@ shape = SubResource("CapsuleShape2D_sh265")
 modulate = Color(0.98797375, 0.45552784, 0.3811656, 1)
 self_modulate = Color(1, 0.76369, 0.74355716, 1)
 texture = ExtResource("2_ac02r")
+
+[node name="SkillsBar" parent="." instance=ExtResource("3_ac02r")]
+visible = true
+offset_left = -146.0
+offset_top = -118.0
+offset_right = -146.0
+offset_bottom = -118.0
+scale = Vector2(1, 1)
+
+[node name="HealthBar" parent="." instance=ExtResource("4_g24gc")]
+offset_left = -112.0
+offset_top = 61.0
+offset_right = -112.0
+offset_bottom = 61.0
+scale = Vector2(0.6, 0.6)
+metadata/_edit_vertical_guides_ = [0.0, 1920.0, 990.0]

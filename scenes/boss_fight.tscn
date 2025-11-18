@@ -1,12 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxup8n4v6j744"]
+[gd_scene load_steps=4 format=3 uid="uid://dxup8n4v6j744"]
 
 [ext_resource type="Script" uid="uid://6d1035bdpl8y" path="res://scripts/boss_fight.gd" id="1_1hapx"]
 [ext_resource type="Script" uid="uid://cqwc4648ewx74" path="res://scripts/boss_fight_manager.gd" id="3_7ydql"]
+[ext_resource type="PackedScene" uid="uid://bvedsk338f7yw" path="res://scenes/UI/SkillsColumn.tscn" id="3_85w88"]
 
 [node name="BossFight" type="Node2D"]
 script = ExtResource("1_1hapx")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -955.0
+offset_top = -536.0
+offset_right = -593.0
+offset_bottom = -481.0
+theme_override_font_sizes/font_size = 40
+text = "BOSS FIGHT SCENE"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="BossFightManager" type="Node" parent="."]
 script = ExtResource("3_7ydql")
+
+[node name="SkillsColumn" parent="." instance=ExtResource("3_85w88")]
+visible = false
+offset_left = -381.0
+offset_top = 83.0
+offset_right = -381.0
+offset_bottom = 83.0

@@ -1,0 +1,230 @@
+[gd_scene load_steps=5 format=3 uid="uid://hxn6oa2ei7qb"]
+
+[ext_resource type="Script" uid="uid://bx3qaeah6707l" path="res://scripts/UI/player_skills_bar.gd" id="1_hf5j5"]
+[ext_resource type="Texture2D" uid="uid://bnoje7i2okjtp" path="res://assets/UI_Visuals/Skills_Icons/guard.png" id="2_x627l"]
+[ext_resource type="Texture2D" uid="uid://ccapfxxjtvyfw" path="res://assets/UI_Visuals/Skills_Icons/melee_buff.png" id="3_vjawd"]
+[ext_resource type="Texture2D" uid="uid://dsnlxit2ht1x7" path="res://assets/UI_Visuals/Skills_Icons/light_attack.png" id="4_fl35a"]
+
+[node name="SkillsBar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(1.5, 1.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("1_hf5j5")
+metadata/_edit_horizontal_guides_ = [1078.0, 0.0]
+metadata/_edit_vertical_guides_ = [1920.0, 1.0]
+
+[node name="TripleSkills" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Speed_Display" type="ColorRect" parent="TripleSkills"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_right = 182.66667
+offset_bottom = 50.0
+color = Color(0.84705883, 0.84705883, 0.84705883, 1)
+
+[node name="EmptySkillsContainer" type="GridContainer" parent="TripleSkills"]
+layout_mode = 1
+offset_left = 7.333336
+offset_top = 4.6666675
+offset_right = 257.33334
+offset_bottom = 54.666668
+scale = Vector2(0.8, 0.8)
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="Skill1" type="ColorRect" parent="TripleSkills/EmptySkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
+[node name="Skill2" type="ColorRect" parent="TripleSkills/EmptySkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
+[node name="Skill3" type="ColorRect" parent="TripleSkills/EmptySkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
+[node name="Skill1Speed" type="Label" parent="TripleSkills"]
+layout_mode = 0
+offset_left = 31.333334
+offset_top = 17.333332
+offset_right = 71.333336
+offset_bottom = 51.333332
+theme_override_font_sizes/font_size = 24
+text = "8"
+
+[node name="Skill2Speed" type="Label" parent="TripleSkills"]
+layout_mode = 0
+offset_left = 95.333336
+offset_top = 18.0
+offset_right = 135.33334
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 24
+text = "6"
+
+[node name="Skill3Speed" type="Label" parent="TripleSkills"]
+layout_mode = 0
+offset_left = 158.66667
+offset_top = 17.333332
+offset_right = 198.66667
+offset_bottom = 51.333332
+theme_override_font_sizes/font_size = 24
+text = "7"
+
+[node name="SkillsContainer" type="GridContainer" parent="TripleSkills"]
+visible = false
+layout_mode = 0
+offset_left = 79.333336
+offset_top = 5.3333397
+offset_right = 329.33334
+offset_bottom = 55.33334
+scale = Vector2(0.8, 0.8)
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 5
+
+[node name="Skill1" type="TextureRect" parent="TripleSkills/SkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_x627l")
+
+[node name="Skill2" type="TextureRect" parent="TripleSkills/SkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("3_vjawd")
+
+[node name="Skill3" type="TextureRect" parent="TripleSkills/SkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("4_fl35a")
+
+[node name="DoubleSkills" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Speed_Display" type="ColorRect" parent="DoubleSkills"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_right = 171.33334
+offset_bottom = 50.0
+color = Color(0.8697811, 0.6681279, 0.16266173, 1)
+
+[node name="SpeedLabel" type="Label" parent="DoubleSkills/Speed_Display"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 24
+text = "SP: 8"
+
+[node name="EmptySkillsContainer" type="GridContainer" parent="DoubleSkills"]
+layout_mode = 1
+offset_left = 79.333336
+offset_top = 5.3333397
+offset_right = 329.33334
+offset_bottom = 55.33334
+scale = Vector2(0.8, 0.8)
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 5
+
+[node name="Skill1_" type="ColorRect" parent="DoubleSkills/EmptySkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
+[node name="Skill1_2" type="ColorRect" parent="DoubleSkills/EmptySkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
+[node name="SkillsContainer" type="GridContainer" parent="DoubleSkills"]
+visible = false
+layout_mode = 0
+offset_left = 79.333336
+offset_top = 5.3333397
+offset_right = 329.33334
+offset_bottom = 55.33334
+scale = Vector2(0.8, 0.8)
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 5
+
+[node name="Skill1" type="TextureRect" parent="DoubleSkills/SkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_x627l")
+
+[node name="Skill2" type="TextureRect" parent="DoubleSkills/SkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("3_vjawd")
+
+[node name="SingleSkills" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Speed_Display" type="ColorRect" parent="SingleSkills"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_right = 126.0
+offset_bottom = 50.0
+color = Color(0.8697811, 0.6681279, 0.16266173, 1)
+
+[node name="SpeedLabel" type="Label" parent="SingleSkills/Speed_Display"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 24
+text = "SP: 8"
+
+[node name="EmptySkillsContainer" type="GridContainer" parent="SingleSkills"]
+layout_mode = 1
+offset_left = 79.333336
+offset_top = 5.3333397
+offset_right = 132.66667
+offset_bottom = 55.33334
+scale = Vector2(0.8, 0.8)
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 5
+
+[node name="Skill1_" type="ColorRect" parent="SingleSkills/EmptySkillsContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
+[node name="SkillsContainer" type="GridContainer" parent="SingleSkills"]
+layout_mode = 0
+offset_left = 79.333336
+offset_top = 5.3333397
+offset_right = 329.33334
+offset_bottom = 55.33334
+scale = Vector2(0.8, 0.8)
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 5
+
+[node name="Skill1" type="TextureRect" parent="SingleSkills/SkillsContainer"]
+visible = false
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_x627l")

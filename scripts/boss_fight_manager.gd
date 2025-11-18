@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 func spawn_players() -> void:
-	var player_positions = [Vector2(-450, -200), Vector2(-400, 150)]
+	var player_positions = [Vector2(-600, -120), Vector2(-200, -120)]
 	
 	for i in range(MAX_PLAYERS):
 		var player_instance = PLAYER_SCENE.instantiate() as Entity
@@ -26,16 +26,33 @@ func spawn_players() -> void:
 		
 		add_child(player_instance)
 		players.append(player_instance)
+			
+		#generate skills bar for this player
+		var bar = player_instance.get_node_or_null("SkillsBar")
+		if bar:
+			bar.show_bar()
+			
+		#generate skills column for this player
+		var col = player_instance.get_node_or_null("SkillsColumn")
+		if col:
+			col.generate_skills()
 
 
 func spawn_boss() -> void:
-	var boss_position = Vector2(200, 0)
+	var boss_position = Vector2(400, -120)
 	var boss_instance = BOSS_SCENE.instantiate() as Entity
 	boss_instance.global_position = boss_position
 	boss_instance.name = "Boss"
 	
 	add_child(boss_instance)
 	boss = boss_instance
+
+	var bar: SkillsBar = boss_instance.get_node_or_null("SkillsBar")
+	if bar:
+		print("Boss bar found. Showing bar.")
+		bar.show_bar()
+	else:
+		push_error("Boss has NO SkillsBar node!")
 
 
 func start_boss_fight() -> void:

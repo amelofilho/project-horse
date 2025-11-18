@@ -1,0 +1,250 @@
+[gd_scene load_steps=23 format=3 uid="uid://dlhdnhe4yr8gw"]
+
+[ext_resource type="Script" uid="uid://cqn3bacokpp77" path="res://scripts/UI/player_health_bar.gd" id="1_lpjn6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5dj0c"]
+bg_color = Color(0.627451, 0.04411765, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.029296875, 0.0006866455, 0.0006866455, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hy8oe"]
+bg_color = Color(0.03289795, 0.6015625, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4ahi"]
+bg_color = Color(0.5019608, 0.01764706, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0xxc"]
+bg_color = Color(0, 0.6699219, 0.12822723, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0xxc"]
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_alav0"]
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdhdo"]
+region = Rect2(64, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbk8s"]
+region = Rect2(96, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4ahi"]
+region = Rect2(0, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18ih6"]
+region = Rect2(32, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ply7"]
+region = Rect2(64, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2od5j"]
+region = Rect2(96, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gym46"]
+region = Rect2(128, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anae0"]
+region = Rect2(160, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50miu"]
+region = Rect2(192, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rm4p5"]
+region = Rect2(224, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jv8rx"]
+region = Rect2(128, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtyxy"]
+region = Rect2(160, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cn0o"]
+region = Rect2(192, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kegab"]
+region = Rect2(224, 128, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_18ih6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0xxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_alav0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdhdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbk8s")
+}],
+"loop": true,
+"name": &"blue_border",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4ahi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18ih6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ply7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2od5j")
+}],
+"loop": true,
+"name": &"green_border",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gym46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anae0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50miu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rm4p5")
+}],
+"loop": true,
+"name": &"orange_border",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv8rx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtyxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cn0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kegab")
+}],
+"loop": true,
+"name": &"purple_border",
+"speed": 5.0
+}]
+
+[node name="HealthBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = -1151.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lpjn6")
+metadata/_edit_horizontal_guides_ = [0.0, 1080.0]
+metadata/_edit_vertical_guides_ = [0.0, 1920.0]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1123.0
+offset_top = 771.25
+offset_right = 1123.0
+offset_bottom = 811.25
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 20.0
+offset_right = 368.5
+offset_bottom = 71.5
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_5dj0c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hy8oe")
+step = 1.0
+show_percentage = false
+
+[node name="HealthValue" type="Label" parent="."]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 24.0
+offset_right = 298.0
+offset_bottom = 66.0
+theme_override_font_sizes/font_size = 30
+text = "Health"
+
+[node name="Name" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 10.0
+offset_top = 55.0
+offset_right = 248.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 70
+text = "NAME"
+
+[node name="HBoxContainer (Testing)" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 684.0
+offset_top = 728.0
+offset_right = 974.0
+offset_bottom = 818.6667
+scale = Vector2(1.5, 1.5)
+theme_override_constants/separation = 40
+
+[node name="Damage" type="Button" parent="HBoxContainer (Testing)"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_n4ahi")
+action_mode = 0
+text = "   -10   "
+
+[node name="Heal" type="Button" parent="HBoxContainer (Testing)"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_j0xxc")
+text = "  +10   "
+
+[node name="PortraitContainer" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 714.0
+offset_bottom = 547.0
+
+[node name="AnimatedBorder" type="AnimatedSprite2D" parent="PortraitContainer"]
+position = Vector2(357, 273)
+scale = Vector2(22.1875, 17)
+sprite_frames = SubResource("SpriteFrames_18ih6")
+animation = &"purple_border"
+autoplay = "blue_border"
+
+[node name="Portrait" type="TextureRect" parent="PortraitContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 26.405
+offset_top = 24.111002
+offset_right = 1527.7217
+offset_bottom = 1153.4075
+scale = Vector2(0.3, 0.3)
+
+[connection signal="pressed" from="HBoxContainer (Testing)/Damage" to="." method="_on_damage_pressed"]
+[connection signal="pressed" from="HBoxContainer (Testing)/Heal" to="." method="_on_heal_pressed"]
