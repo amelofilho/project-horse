@@ -1,10 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://50rmrhc2nt3g"]
+[gd_scene load_steps=12 format=3 uid="uid://50rmrhc2nt3g"]
 
 [ext_resource type="Script" uid="uid://d1654oremtomk" path="res://scripts/entities/player.gd" id="1_pe66b"]
 [ext_resource type="Texture2D" uid="uid://c6f2iduw0xyl4" path="res://icon.svg" id="2_dmgsc"]
 [ext_resource type="PackedScene" uid="uid://hxn6oa2ei7qb" path="res://scenes/UI/player_skills_bar.tscn" id="3_1ie0h"]
 [ext_resource type="PackedScene" uid="uid://dlhdnhe4yr8gw" path="res://scenes/UI/entity_health_bar.tscn" id="4_42nxq"]
 [ext_resource type="PackedScene" uid="uid://bvedsk338f7yw" path="res://scenes/UI/SkillsColumn.tscn" id="5_5u6hq"]
+[ext_resource type="Script" uid="uid://dkqi6rkvgvfov" path="res://scripts/skills/skill_container.gd" id="6_l2mvf"]
+[ext_resource type="Script" uid="uid://c73rfbsmvew6j" path="res://scripts/skills/skill.gd" id="6_qgttk"]
+[ext_resource type="Texture2D" uid="uid://dsnlxit2ht1x7" path="res://assets/UI_Visuals/Skills_Icons/light_attack.png" id="7_o1hco"]
+[ext_resource type="Texture2D" uid="uid://ccapfxxjtvyfw" path="res://assets/UI_Visuals/Skills_Icons/melee_buff.png" id="8_7dpir"]
+[ext_resource type="Texture2D" uid="uid://xaau4uqcyrlx" path="res://assets/UI_Visuals/Skills_Icons/heavy_melee.png" id="9_mfpq1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sh265"]
 radius = 87.0
@@ -47,3 +52,39 @@ offset_top = 107.0
 offset_right = 55.0
 offset_bottom = 130.0
 text = "Player Name"
+
+[node name="SkillContainer" type="Node" parent="."]
+script = ExtResource("6_l2mvf")
+
+[node name="Skill1" type="Node" parent="SkillContainer"]
+script = ExtResource("6_qgttk")
+skill_id = 1
+skill_name = "Swing"
+description = "Swings a sword"
+base_roll = 4.0
+bonus_roll = 8.0
+icon_texture = ExtResource("7_o1hco")
+copies_in_deck = 6
+
+[node name="Skill2" type="Node" parent="SkillContainer"]
+script = ExtResource("6_qgttk")
+skill_id = 2
+skill_name = "Jab"
+description = "Quick jab with a high success rate"
+base_roll = 5.0
+bonus_roll = 10.0
+odds = 0.8
+icon_texture = ExtResource("8_7dpir")
+copies_in_deck = 4
+
+[node name="Skill3" type="Node" parent="SkillContainer"]
+script = ExtResource("6_qgttk")
+skill_id = 3
+skill_name = "Charge!"
+description = "Charging attack"
+base_roll = 10.0
+bonus_roll = 15.0
+coins = 2
+odds = 0.6
+icon_texture = ExtResource("9_mfpq1")
+copies_in_deck = 2

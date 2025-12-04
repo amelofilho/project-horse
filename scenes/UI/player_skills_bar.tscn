@@ -82,6 +82,7 @@ layout_mode = 2
 texture = ExtResource("4_fl35a")
 
 [node name="Skill1Speed" type="Label" parent="TripleSkills"]
+visible = false
 layout_mode = 0
 offset_left = 31.333334
 offset_top = 17.333332
@@ -91,6 +92,7 @@ theme_override_font_sizes/font_size = 24
 text = "8"
 
 [node name="Skill2Speed" type="Label" parent="TripleSkills"]
+visible = false
 layout_mode = 0
 offset_left = 95.333336
 offset_top = 18.0
@@ -100,6 +102,7 @@ theme_override_font_sizes/font_size = 24
 text = "6"
 
 [node name="Skill3Speed" type="Label" parent="TripleSkills"]
+visible = false
 layout_mode = 0
 offset_left = 158.66667
 offset_top = 17.333332

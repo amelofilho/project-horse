@@ -1,9 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://sfsrb46ufhh0"]
+[gd_scene load_steps=12 format=3 uid="uid://sfsrb46ufhh0"]
 
 [ext_resource type="Script" uid="uid://c8xl5gilwultu" path="res://scripts/entities/boss.gd" id="1_mdhvr"]
 [ext_resource type="Texture2D" uid="uid://c6f2iduw0xyl4" path="res://icon.svg" id="2_ac02r"]
 [ext_resource type="PackedScene" uid="uid://kyry78favrgh" path="res://scenes/UI/boss_skills_bar.tscn" id="3_ac02r"]
 [ext_resource type="PackedScene" uid="uid://dlhdnhe4yr8gw" path="res://scenes/UI/entity_health_bar.tscn" id="4_g24gc"]
+[ext_resource type="Script" uid="uid://dkqi6rkvgvfov" path="res://scripts/skills/skill_container.gd" id="5_t365j"]
+[ext_resource type="Script" uid="uid://c73rfbsmvew6j" path="res://scripts/skills/skill.gd" id="6_pqlna"]
+[ext_resource type="Texture2D" uid="uid://dsnlxit2ht1x7" path="res://assets/UI_Visuals/Skills_Icons/light_attack.png" id="7_c3gvn"]
+[ext_resource type="Texture2D" uid="uid://ccapfxxjtvyfw" path="res://assets/UI_Visuals/Skills_Icons/melee_buff.png" id="8_5joy1"]
+[ext_resource type="Texture2D" uid="uid://xaau4uqcyrlx" path="res://assets/UI_Visuals/Skills_Icons/heavy_melee.png" id="9_woypx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4agdh"]
 size = Vector2(134, 134)
@@ -20,15 +25,15 @@ speed = 4.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4agdh")
 
-[node name="HoverArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HoverArea"]
-shape = SubResource("RectangleShape2D_g24gc")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.98797375, 0.45552784, 0.3811656, 1)
 self_modulate = Color(1, 0.76369, 0.74355716, 1)
 texture = ExtResource("2_ac02r")
+
+[node name="HoverArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoverArea"]
+shape = SubResource("RectangleShape2D_g24gc")
 
 [node name="SkillsBar" parent="." instance=ExtResource("3_ac02r")]
 offset_left = -146.0
@@ -44,6 +49,50 @@ offset_right = -112.0
 offset_bottom = 61.0
 scale = Vector2(0.6, 0.6)
 metadata/_edit_vertical_guides_ = [0.0, 1920.0, 990.0]
+
+[node name="SkillContainer" type="Node" parent="."]
+script = ExtResource("5_t365j")
+
+[node name="Skill1" type="Node" parent="SkillContainer"]
+script = ExtResource("6_pqlna")
+skill_id = 1
+description = "Boss Attack #1"
+base_roll = 5.0
+bonus_roll = 10.0
+icon_texture = ExtResource("7_c3gvn")
+
+[node name="Skill2" type="Node" parent="SkillContainer"]
+script = ExtResource("6_pqlna")
+skill_id = 2
+description = "Boss Attack #2"
+base_roll = 6.0
+bonus_roll = 15.0
+icon_texture = ExtResource("8_5joy1")
+
+[node name="Skill3" type="Node" parent="SkillContainer"]
+script = ExtResource("6_pqlna")
+skill_id = 3
+description = "Boss Attack #3"
+base_roll = 15.0
+bonus_roll = 20.0
+icon_texture = ExtResource("9_woypx")
+
+[node name="Skill4" type="Node" parent="SkillContainer"]
+script = ExtResource("6_pqlna")
+skill_id = 4
+description = "Boss Attack #4"
+base_roll = 15.0
+bonus_roll = 20.0
+icon_texture = ExtResource("9_woypx")
+
+[node name="Skill5" type="Node" parent="SkillContainer"]
+script = ExtResource("6_pqlna")
+skill_id = 5
+description = "Boss Attack #5
+"
+base_roll = 15.0
+bonus_roll = 20.0
+icon_texture = ExtResource("9_woypx")
 
 [connection signal="mouse_entered" from="HoverArea" to="." method="_on_hover_area_mouse_entered"]
 [connection signal="mouse_exited" from="HoverArea" to="." method="_on_hover_area_mouse_exited"]

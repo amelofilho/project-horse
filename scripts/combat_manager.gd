@@ -8,6 +8,7 @@ var boss: Entity
 # Execute all skills in the provided queue
 func resolve_skills(skill_queue: Array) -> void:
 	print("\n--- Resolving %d skills ---" % skill_queue.size())
+	print(skill_queue[0])
 	
 	# Execute all skills based on speed order
 	for i in range(skill_queue.size()):
@@ -28,7 +29,7 @@ func resolve_skills(skill_queue: Array) -> void:
 			print("ERROR: No valid target found!")
 			continue
 		
-		# Checks if hte target is dead
+		# Checks if the target is dead
 		if target.is_dead:
 			continue
 		
@@ -40,5 +41,3 @@ func resolve_skills(skill_queue: Array) -> void:
 		
 		# Small delay between skills for visual clarity
 		await get_tree().create_timer(0.5).timeout
-	
-	# After execution

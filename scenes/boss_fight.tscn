@@ -14,6 +14,7 @@ bg_color = Color(0.71629584, 0.7162964, 0.716296, 1)
 [node name="BossFight" type="Node2D"]
 
 [node name="Label" type="Label" parent="."]
+visible = false
 offset_left = -955.0
 offset_top = -536.0
 offset_right = -593.0

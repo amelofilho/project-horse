@@ -24,7 +24,6 @@ var players: Array = []
 var enemy: Entity
 
 
-
 # Initialize subsystems and start battle
 func _ready():
 	# Adriano's testing before moving to prelim
@@ -34,7 +33,6 @@ func _ready():
 	# turned off to test UI
 	_initialize_subsystems()
 	start_battle()
-	
 
 
 func _initialize_subsystems():
@@ -47,7 +45,6 @@ func _initialize_subsystems():
 	
 	combat_manager = CombatManager.new()
 	add_child(combat_manager)
-	
 	
 	# TODO: Initialize clash_system when ready
 
@@ -74,7 +71,7 @@ func start_battle():
 	
 	_start_skill_selection()
 
-# Skill selection phase
+## Skill selection phase
 func _start_skill_selection():
 	state = State.SKILL_SELECTION
 	print("\nPhase: Skill Selection\n")
@@ -94,10 +91,10 @@ func _start_skill_selection():
 	# Generate red preview arrows. Only visible when hovering over boss/enemy entity
 	action_handler.prepare_preview_arrows()
 	
-	# populates the empty black boxes with P_skillID from skill pool
-	action_handler.populate_player_skill_selection()
+	# Connect boss hover to show/hide arrows
+	action_handler.connect_boss_hover_signals()
 	
-	# user interacts with UI to select their skill per player
+	# Setup click handlers for skill bars
 	action_handler.select_player_skills()
 	
 	# Wait for all character selections to complete
@@ -119,6 +116,7 @@ func _start_skill_selection():
 	
 	# Execute combat phase
 	_on_skills_ready(all_skills)
+
 
 # Boss AI skill selection (placeholder)
 func _get_boss_skills() -> Array:
@@ -153,17 +151,28 @@ func _get_boss_skills() -> Array:
 	
 	return skills
 
+
 # Combat phase - execute all skills in speed order
 func _on_skills_ready(skill_queue: Array):
 	state = State.COMBAT
-	print("\n Phase: Combat")
-	print("Executing %d skills in speed order" % skill_queue.size())
+	print("\nPhase: Combat")
 	
 	# Sort all skills by user speed (highest speed first)
 	skill_queue.sort_custom(func(a, b): return a.user.speed > b.user.speed)
 	
 	# Let combat manager resolve skills
+	print("Now entering combat_manager from battle_manager")
 	await combat_manager.resolve_skills(skill_queue)
+	print("Combat manager has finished!")
+	
+	# Consume used skills from player decks (removes from column_pools)
+	action_handler.consume_used_skills()
+	
+	# Replace only the used skills in the 3x3 grid with new ones
+	action_handler.replace_used_skills_in_grid()
+	
+	# Clear the player selections and reset UI (clears the skill bar above players)
+	action_handler.clear_selections_and_ui()
 	
 	# After combat, check for end
 	if _check_battle_end():
@@ -171,6 +180,7 @@ func _on_skills_ready(skill_queue: Array):
 	else:
 		# Reset for next turn
 		_start_skill_selection()
+
 
 # Check if battle ended
 func _check_battle_end() -> bool:

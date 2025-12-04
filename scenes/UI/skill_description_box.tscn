@@ -10,7 +10,7 @@
 layout_mode = 3
 anchor_right = 0.148
 anchor_bottom = 0.17500001
-offset_right = -284.16
+offset_right = -300.0
 offset_bottom = -189.00002
 script = ExtResource("1_xcspw")
 metadata/_edit_vertical_guides_ = [8.0, 118.0]
@@ -18,7 +18,7 @@ metadata/_edit_horizontal_guides_ = [74.0]
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 281.0
+offset_right = 345.0
 offset_bottom = 189.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_xcspw")
 
@@ -42,14 +42,15 @@ vertical_alignment = 2
 
 [node name="SkillDescription" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 121.0
-offset_top = 74.0
-offset_right = 275.0
-offset_bottom = 182.0
+offset_left = 132.0
+offset_top = 73.0
+offset_right = 346.0
+offset_bottom = 181.0
 text = "Description: This 
 ability does absol-
 utely nothing and 
 you lose the game. "
+autowrap_mode = 2
 
 [node name="Stats" type="VBoxContainer" parent="Panel"]
 layout_mode = 0
