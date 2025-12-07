@@ -37,10 +37,7 @@ func set_max_coins(val: int) -> SkillSchema:
 
 func load_args(args: Dictionary) -> SkillSchema:
 	return (
-		set_tier(args.tier)
-		. set_max_base(args.max_base)
-		. set_max_bonus(args.max_bonus)
-		. set_max_coins(args.max_coins)
+		set_tier(args.tier).set_max_base(args.max_base).set_max_bonus(args.max_bonus).set_max_coins(args.max_coins)
 	)
 
 

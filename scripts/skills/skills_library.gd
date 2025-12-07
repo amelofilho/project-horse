@@ -35,6 +35,7 @@ class SkillGenerator:
 	var _rng: RandomNumberGenerator
 	var _lib: SkillsLibrary
 
+
 	# After initialization only gen_random_skill is
 	# intended for high level use by the programmers.
 	func _init(_seed: int, lib: SkillsLibrary) -> void:
@@ -42,6 +43,7 @@ class SkillGenerator:
 		_lib = lib
 		_rng.seed = _seed
 		max_tier = _lib.lib_config.max_skill_tiers
+
 
 	## Returns a randomly generated [code]Skill[/code]
 	## given a [code]SkillSchema[/code]
@@ -58,12 +60,13 @@ class SkillGenerator:
 			id,
 			roll_value(tier, max_base),
 			roll_value(tier, max_bonus),
-			_rng.randi_range(1, max_coins)
+			_rng.randi_range(1, max_coins),
 		)
 
 		_lib.all_skills.push_back(skill)
 
 		return skill
+
 
 	func roll_value(tier: int, cap: float) -> float:
 		# How does this work?
@@ -81,6 +84,7 @@ class SkillGenerator:
 		val = clampf(val, 1, cap)
 
 		return val
+
 
 	func compute_skill_id() -> int:
 		var id: int = _lib.skills_ct

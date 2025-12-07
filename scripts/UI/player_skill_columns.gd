@@ -1,7 +1,7 @@
 class_name SkillsColumn
 extends Control
 
-const SKILL_ICONS : Array[Texture2D] = [
+const SKILL_ICONS: Array[Texture2D] = [
 	preload("res://assets/UI_Visuals/Skills_Icons/guard.png"),
 	preload("res://assets/UI_Visuals/Skills_Icons/heavy_melee.png"),
 	preload("res://assets/UI_Visuals/Skills_Icons/light_attack.png"),
@@ -26,19 +26,22 @@ var _original_position: Vector2
 var columns: Array
 const ROWS_PER_COLUMN := 3
 
+
 func _ready():
 	root_3.visible = false
 	columns = [col1, col2, col3]
 	desc_box.visible = false
 
+
 func generate_placeholder_skill_icons():
 	print("[SkillsColumn] generate_placeholder_skill_icons()")
 	root_3.visible = true
-	
+
 	# Connect hover signals to existing ColorRects
 	for container in columns:
 		for icon in container.get_children():
 			_connect_hover(icon)
+
 
 func _connect_hover(icon: Control) -> void:
 	"""Helper to safely connect hover signals"""
@@ -47,6 +50,7 @@ func _connect_hover(icon: Control) -> void:
 	if not icon.mouse_exited.is_connected(_on_icon_hover_exit):
 		icon.mouse_exited.connect(_on_icon_hover_exit.bind(icon))
 
+
 func _disconnect_hover(icon: Control) -> void:
 	"""Helper to safely disconnect hover signals"""
 	if icon.mouse_entered.is_connected(_on_icon_hover_enter):
@@ -54,21 +58,22 @@ func _disconnect_hover(icon: Control) -> void:
 	if icon.mouse_exited.is_connected(_on_icon_hover_exit):
 		icon.mouse_exited.disconnect(_on_icon_hover_exit)
 
+
 func _on_icon_hover_enter(icon: Control):
 	# Check if this icon has a real skill assigned
 	var skill = icon.get_meta("skill", null)
-	
+
 	if skill != null and skill is Skill:
 		# Real skill - use the proper method
 		var icon_texture = null
 		if icon is TextureRect:
 			icon_texture = icon.texture
-		
+
 		# Get the global position of the icon for positioning
 		var icon_global_pos = get_viewport().get_mouse_position() + Vector2(20, 20)
 		desc_box.global_position = get_viewport().get_mouse_position() + Vector2(20, 20)
 		desc_box.show_for_skill(skill, icon_texture, icon_global_pos)
-	
+
 	# Placeholder case (ColorRect with no skill)
 	elif icon is ColorRect:
 		desc_box.icon_tex.texture = null
@@ -80,7 +85,7 @@ func _on_icon_hover_enter(icon: Control):
 		desc_box.odds_label.text = ""
 		desc_box.global_position = get_viewport().get_mouse_position() + Vector2(20, 20)
 		desc_box.visible = true
-	
+
 	# Label case (if you're using labels for some reason)
 	elif icon is Label:
 		desc_box.icon_tex.texture = null
@@ -90,48 +95,56 @@ func _on_icon_hover_enter(icon: Control):
 		desc_box.global_position = get_viewport().get_mouse_position() + Vector2(20, 20)
 		desc_box.visible = true
 
+
 func _on_icon_hover_exit(icon: Control):
 	desc_box.hide_box()
+
 
 # ASSIGN REAL SKILLS AND CONNECT HOVER EVENTS
 func show_skills(player: Entity) -> void:
 	print("\n[SkillsColumn] show_skills() for", player.name)
-	
+
 	# Make the skills column visible
 	root_3.visible = true
-	
+
 	var skills = player.skills
 	var skill_index := 0
-	
+
 	print("  Total skills found =", skills.size())
-	
+
 	for col_i in range(columns.size()):
 		var container = columns[col_i]
 		print("  DEBUG: Column", col_i, "has", container.get_child_count(), "children")
-		
+
 		for row_i in range(container.get_child_count()):
 			var icon = container.get_child(row_i)
-			
+
 			# Disconnect any existing signals
 			_disconnect_hover(icon)
-			
+
 			# Reset metadata
 			icon.set_meta("skill", null)
-			
+
 			if skill_index >= skills.size():
 				# No skill for this slot - leave as placeholder
 				print("    [-] No skill for Column", col_i + 1, "Row", row_i + 1, "(empty slot)")
 				# Reconnect hover for empty slots
 				_connect_hover(icon)
 				continue
-			
+
 			# Assign real skill
 			var skill: Skill = skills[skill_index]
 			icon.set_meta("skill", skill)
-			
-			print("    [+] Skill assigned -> Column", col_i + 1,
-				  "Row", row_i + 1, "SkillID =", skill.skill_id)
-			
+
+			print(
+				"    [+] Skill assigned -> Column",
+				col_i + 1,
+				"Row",
+				row_i + 1,
+				"SkillID =",
+				skill.skill_id,
+			)
+
 			# Set real texture if provided and icon is TextureRect
 			if icon is TextureRect and skill.icon_texture:
 				icon.texture = skill.icon_texture
@@ -144,7 +157,7 @@ func show_skills(player: Entity) -> void:
 				tex_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 				tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 				tex_rect.set_meta("skill", skill)
-				
+
 				# Replace the ColorRect with TextureRect
 				var idx = icon.get_index()
 				container.remove_child(icon)
@@ -152,14 +165,15 @@ func show_skills(player: Entity) -> void:
 				container.move_child(tex_rect, idx)
 				icon.queue_free()
 				icon = tex_rect
-			
+
 			# Connect hover events for this skill
 			_connect_hover(icon)
 			print("       Hover connected.")
-			
+
 			skill_index += 1
-	
+
 	print("[SkillsColumn] Skill assignment complete.\n")
+
 
 func hide_skills() -> void:
 	"""Hide the skills column and description box"""

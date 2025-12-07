@@ -6,7 +6,8 @@ var skills_lib: SkillsLibrary
 
 var lib_config: EntityLibraryConfig
 
-# TODO: maybe generate random enemy entities 
+# TODO: maybe generate random enemy entities
+
 
 # INFO: For fixed boss/player skill sets, ingest here in the Entity
 # library and assign the sets to our respective characters.

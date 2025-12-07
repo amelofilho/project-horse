@@ -6,7 +6,7 @@ extends Control
 
 @onready var bar_3: Control = $TripleSkills
 
-@onready var empty_container: GridContainer  = $TripleSkills/EmptySkillsContainer
+@onready var empty_container: GridContainer = $TripleSkills/EmptySkillsContainer
 #@onready var skills_container: GridContainer = $TripleSkills/SkillsContainer
 
 
@@ -14,7 +14,7 @@ func _ready():
 	# position skill boxes above player
 	position.y = y_offset
 
-	
+
 func generate_placeholder_skill_icons():
 	print("[PlayerSkillsBar] generate_placeholder_skill_icons()")
 	bar_3.visible = true
