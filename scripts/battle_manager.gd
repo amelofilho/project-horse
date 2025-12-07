@@ -36,17 +36,23 @@ func _ready():
 
 
 func _initialize_subsystems():
-	
 	prelim_handler = PrelimCombatHandler.new()
 	add_child(prelim_handler)
 	
 	action_handler = ActionHandler.new()
 	add_child(action_handler)
 	
+	# Initialize clash system
+	clash_system = ClashSystem.new()
+	add_child(clash_system)
+	
+	# Initialize combat manager
 	combat_manager = CombatManager.new()
 	add_child(combat_manager)
 	
-	# TODO: Initialize clash_system when ready
+	# Wire clash system into combat manager
+	combat_manager.clash_system = clash_system
+
 
 func start_battle():
 	state = State.PRE_BATTLE
@@ -70,6 +76,7 @@ func start_battle():
 	action_handler.set_boss_reference(enemy)
 	
 	_start_skill_selection()
+
 
 ## Skill selection phase
 func _start_skill_selection():
@@ -147,7 +154,7 @@ func _get_boss_skills() -> Array:
 		
 		# Print the boss' skill selection
 		print(" [_get_boss_skills()] Boss Slot %d -> Player %d Slot %d (Skill %d)" %
-			[boss_slot_index + 1, target_player_index + 1, target_slot_index+1, random_skill.skill_id])
+			[boss_slot_index + 1, target_player_index + 1, target_slot_index + 1, random_skill.skill_id])
 	
 	return skills
 
@@ -189,6 +196,7 @@ func _check_battle_end() -> bool:
 	
 	return all_players_dead or enemy_dead
 
+
 # Handle battle end
 func _end_battle():
 	if enemy.is_dead:
@@ -199,6 +207,7 @@ func _end_battle():
 		print("Loss!")
 	
 	# TODO: Add scene transitions or victory/defeat screens
+
 
 func _on_start_combat_pressed() -> void:
 	action_handler.request_combat_start()

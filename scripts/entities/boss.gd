@@ -8,6 +8,7 @@ extends Entity
 
 func _ready():
 	#preview_arrows.visible = false  # default hidden
+	super._ready()
 	var area := $HoverArea
 	area.mouse_entered.connect(_on_boss_hover)
 	area.mouse_exited.connect(_on_boss_exit)

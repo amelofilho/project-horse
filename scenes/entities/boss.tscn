@@ -18,6 +18,7 @@ size = Vector2(130, 132)
 
 [node name="Boss" type="CharacterBody2D"]
 script = ExtResource("1_mdhvr")
+max_hp = 100.0
 speed = 4.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

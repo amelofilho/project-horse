@@ -1,43 +1,102 @@
 class_name CombatManager
 extends Node
 
-# References to battle entities (set by BattleManager)
 var players: Array[Entity] = []
 var boss: Entity
+var clash_system: ClashSystem
 
-# Execute all skills in the provided queue
+
 func resolve_skills(skill_queue: Array) -> void:
 	print("\n--- Resolving %d skills ---" % skill_queue.size())
-	print(skill_queue[0])
 	
-	# Execute all skills based on speed order
+	var consumed_slots: Array = []   # SkillSlots already resolved through clash or direct attack
+	
+	# go through each skill in the queue
 	for i in range(skill_queue.size()):
 		var skill_slot = skill_queue[i]
 		
-		# Skip if user is dead
+		# Skip if consumed by previous clash
+		if consumed_slots.has(skill_slot):
+			continue
+		
+		# Skip if the user is dead
 		if skill_slot.user.is_dead:
-			print("\n[%d] %s is dead, skipping skill" % [i + 1, skill_slot.user.name])
+			print("[%s] is dead, skipping skill" % skill_slot.user.name)
 			continue
 		
-		# TODO: Add logic to identify clash vs free attack
-		
-		# Get target entity
+		# Identify target
 		var target: Entity = skill_slot.target_entity
-		
-		# Validate target
 		if target == null:
-			print("ERROR: No valid target found!")
+			print("ERROR: SkillSlot has no valid target entity!")
 			continue
 		
-		# Checks if the target is dead
 		if target.is_dead:
+			print("Target %s is dead, skipping." % target.name)
 			continue
 		
-		# TODO: Apply damage by either calling the clash system or through a direct attack
+		# CLASH DETECTION (using helper func)
+		var opposing_slot = _find_opposing_slot(skill_queue, consumed_slots, skill_slot)
 		
-		# Check if target died from this skill
+		if opposing_slot != null and clash_system != null:
+			print("\n>>> CLASH DETECTED: %s ↔ %s" % [skill_slot.user.name, opposing_slot.user.name])
+			
+			# Run the clash
+			var clash_result: Dictionary = clash_system.run_clash(skill_slot, opposing_slot)
+			
+			var damage_total: int = clash_result["damage_roll"]
+			var winner_is_attacker: bool = clash_result["winner_is_attacker"]
+			
+			# Apply damage to the loser
+			if damage_total > 0:
+				if winner_is_attacker:
+					var loser: Entity = opposing_slot.user
+					loser.take_damage(damage_total)
+					print("%s takes %d clash damage!" % [loser.name, damage_total])
+				else:
+					var loser: Entity = skill_slot.user
+					loser.take_damage(damage_total)
+					print("%s takes %d clash damage!" % [loser.name, damage_total])
+			
+			# Mark both skills as used
+			consumed_slots.append(skill_slot)
+			consumed_slots.append(opposing_slot)
+			
+			# wait before next attack
+			await get_tree().create_timer(1.5).timeout
+			continue
+		
+		# direct attack (when no clash)
+		print("\n>>> DIRECT ATTACK: %s → %s" % [skill_slot.user.name, target.name])
+		
+		if clash_system != null:
+			var dmg_detail: Dictionary = clash_system.roll_skill_for_damage(skill_slot.skill)
+			var dmg: int = dmg_detail["total"]
+			
+			target.take_damage(dmg)
+			print("%s deals %d damage to %s" %
+				[skill_slot.user.name, dmg, target.name])
+		
+		consumed_slots.append(skill_slot)
+		
 		if target.is_dead:
 			print("%s has been defeated!" % target.name)
 		
-		# Small delay between skills for visual clarity
-		await get_tree().create_timer(0.5).timeout
+		#wait before next attack
+		await get_tree().create_timer(1.5).timeout
+
+
+# Helper function: Find the skill slot belonging to the target entity
+func _find_opposing_slot(skill_queue: Array, consumed_slots: Array, current_slot):
+	var current_target: Entity = current_slot.target_entity
+	if current_target == null:
+		return null
+	
+	for slot in skill_queue:
+		if slot == current_slot:
+			continue
+		if consumed_slots.has(slot):
+			continue
+		if slot.user == current_target:
+			return slot
+	
+	return null

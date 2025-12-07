@@ -70,7 +70,12 @@ func take_damage(amount: float) -> void:
 
 	current_hp -= amount
 	current_hp = max(0.0, current_hp)
-
+	
+	# update health bar
+	var hb := get_node_or_null("HealthBar")
+	if hb:
+		hb.refresh()
+		
 	play_animation("damaged")
 
 	if current_hp <= 0:
