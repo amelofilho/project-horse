@@ -7,9 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://bvedsk338f7yw" path="res://scenes/UI/SkillsColumn.tscn" id="5_5u6hq"]
 [ext_resource type="Script" uid="uid://dkqi6rkvgvfov" path="res://scripts/skills/skill_container.gd" id="6_l2mvf"]
 [ext_resource type="Script" uid="uid://c73rfbsmvew6j" path="res://scripts/skills/skill.gd" id="6_qgttk"]
-[ext_resource type="Texture2D" uid="uid://dsnlxit2ht1x7" path="res://assets/UI_Visuals/Skills_Icons/light_attack.png" id="7_o1hco"]
-[ext_resource type="Texture2D" uid="uid://ccapfxxjtvyfw" path="res://assets/UI_Visuals/Skills_Icons/melee_buff.png" id="8_7dpir"]
-[ext_resource type="Texture2D" uid="uid://xaau4uqcyrlx" path="res://assets/UI_Visuals/Skills_Icons/heavy_melee.png" id="9_mfpq1"]
+[ext_resource type="Texture2D" uid="uid://wx37x5kbiowi" path="res://assets/UI_Visuals/Skills_Icons/yellow_s1.png" id="8_l2mvf"]
+[ext_resource type="Texture2D" uid="uid://dgexd82s66w3k" path="res://assets/UI_Visuals/Skills_Icons/yellow_s2.png" id="9_v7i6e"]
+[ext_resource type="Texture2D" uid="uid://dsvj6hybe5hg5" path="res://assets/UI_Visuals/Skills_Icons/yellow_s3.png" id="10_mrloc"]
 
 [sub_resource type="Animation" id="Animation_v7i6e"]
 resource_name = "RESET"
@@ -26,9 +26,9 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_6ehfl"]
-resource_name = "Hurt"
-length = 0.6
+[sub_resource type="Animation" id="Animation_7i1m0"]
+resource_name = "Attack_1"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -36,10 +36,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [10, 11, 12, 13, 14, 15]
+"values": [29, 30, 31, 32, 33]
 }
 
 [sub_resource type="Animation" id="Animation_l2mvf"]
@@ -59,9 +59,9 @@ tracks/0/keys = {
 "values": [29, 30]
 }
 
-[sub_resource type="Animation" id="Animation_7i1m0"]
-resource_name = "Attack_1"
-length = 0.5
+[sub_resource type="Animation" id="Animation_6ehfl"]
+resource_name = "Hurt"
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -69,10 +69,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [29, 30, 31, 32, 33]
+"values": [10, 11, 12, 13, 14, 15]
 }
 
 [sub_resource type="Animation" id="Animation_mrloc"]
@@ -166,7 +166,7 @@ description = "[On Head]: Gain 3 Mana
 base_roll = 4.0
 bonus_roll = 6.0
 coins = 2
-icon_texture = ExtResource("7_o1hco")
+icon_texture = ExtResource("8_l2mvf")
 copies_in_deck = 6
 status_type = "Mana"
 player = NodePath("../..")
@@ -181,7 +181,7 @@ base_roll = 4.0
 bonus_roll = 6.0
 coins = 3
 odds = 0.6
-icon_texture = ExtResource("8_7dpir")
+icon_texture = ExtResource("9_v7i6e")
 copies_in_deck = 4
 status_type = "Mana"
 player = NodePath("../..")
@@ -195,7 +195,7 @@ base_roll = 5.0
 bonus_roll = 5.0
 coins = 2
 odds = 0.7
-icon_texture = ExtResource("9_mfpq1")
+icon_texture = ExtResource("10_mrloc")
 copies_in_deck = 2
 status_type = "Mana"
 player = NodePath("../..")
