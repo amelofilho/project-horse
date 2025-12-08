@@ -6,6 +6,7 @@ extends Node
 @export_multiline var description: String = ""
 @export var base_roll: float = 0.0
 @export var bonus_roll: float = 0.0
+@export var bonus_temp: float = 0.0 # This is used to provide extra damage from status/resources
 @export var coins: int = 1
 @export var odds: float = 0.5
 @export var icon_texture: Texture2D
@@ -15,6 +16,11 @@ extends Node
 
 # Skill behavior/type (optional, for future use)
 @export_enum("Attack", "Defend", "Heal", "Buff", "Debuff", "Special") var skill_type: String = "Attack"
+@export_enum("Mana", "Adren", "None") var status_type: String = "None"
+
+# TS for skill handling
+@export var crit_mult: float = 1.0
+@export var player: Node
 
 
 func _init(

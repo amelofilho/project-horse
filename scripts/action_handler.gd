@@ -128,12 +128,19 @@ func get_boss_slot_skill(slot_index: int):
 
 # Check if all selections are complete
 func _check_if_complete():
-	for player_slots in player_selections:
+	for i in range(player_selections.size()):
+		var player_slots = player_selections[i]
+		var player = players_ref[i]
+		
+		# Skip dead players - they don't need to have skills selected
+		if player.is_dead:
+			continue
+		
 		for skill_slot in player_slots:
 			if skill_slot == null:
 				print("CANNOT START COMBAT - Empty slot(s) remaining")
 				return # Still have empty slots
-
+	
 	# Signals that the "Start Combat" button can now be interacted with
 	all_selections_complete.emit()
 
@@ -616,13 +623,10 @@ func replenish_column(player_index: int, column_index: int) -> void:
 
 # Remove used skills from the player's deck permanently
 func consume_used_skills() -> void:
-	print("\n=== Consuming Used Skills ===")
 	
 	for player_index in range(player_selections.size()):
 		var player = players_ref[player_index]
 		var used_slots = player_selections[player_index]
-		
-		print("\n[consume]", player.name, "used skills:")
 		
 		# Get the column pools
 		var column_pools: Array = player.get_meta("column_pools", [])
@@ -644,7 +648,6 @@ func consume_used_skills() -> void:
 				var removed = false
 				for i in range(pool.size()):
 					if pool[i] == slot.skill:
-						print("  - Removed Skill", slot.skill.skill_id, "from Column", column_idx + 1, "pool")
 						pool.remove_at(i)
 						removed = true
 						break
@@ -658,10 +661,8 @@ func consume_used_skills() -> void:
 		# Check if any pools are empty and need replenishment
 		for col_idx in range(column_pools.size()):
 			var pool_size = column_pools[col_idx].size()
-			print("[consume] Column", col_idx + 1, "has", pool_size, "skills remaining")
 			
 			if pool_size == 0:
-				print("[consume] Column", col_idx + 1, "depleted! Replenishing...")
 				_replenish_column_pool(player, col_idx)
 
 
@@ -772,11 +773,6 @@ func _on_column_skill_gui_input(
 	if mb == null or not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT:
 		return
 	
-	print("\n[CLICK] Column Skill Click:",
-		" Player:", player_index,
-		" Col:", column_index,
-		" Node type:", node.get_class())
-	
 	var skill: Skill = node.get_meta("skill")
 	if skill == null:
 		print("[ERROR] Column node has NO skill meta!")
@@ -869,8 +865,6 @@ func _on_column_skill_gui_input(
 	
 	# Mark which column node was used for this slot
 	node.set_meta("used_in_slot", slot_index)
-	
-	print("[CLICK] Slot ", slot_index, " is now using skill ", skill.skill_id)
 
 
 func _on_bar_slot_gui_input(event: InputEvent, player_index: int, slot_index: int) -> void:
@@ -887,18 +881,11 @@ func _on_bar_slot_gui_input(event: InputEvent, player_index: int, slot_index: in
 		print("[CLICK] Slot already empty.")
 		return
 
-	print("[CLICK] Clearing slot", slot_index,
-		" skill =", existing_slot.skill.skill_id)
-
 	var cleared := clear_slot(player_index, slot_index)
-	print("[CLICK] clear_slot() returned:", cleared)
 
 	# Now fully restore the ColorRect
 	if cleared:
-		print("[CLICK] Resetting slot visual for player", player_index, "slot", slot_index)
 		_reset_bar_slot_visual(player_index, slot_index)
-
-	print("[CLICK] Slot", slot_index, "cleared.\n")
 	
 	
 func _cache_bar_slot_default(
@@ -979,8 +966,6 @@ func _reset_bar_slot_visual(player_index: int, slot_index: int) -> void:
 		new_node.gui_input.connect(
 			_on_bar_slot_gui_input.bind(player_index, slot_index)
 		)
-
-	print("[reset] Restored default ColorRect for player", player_index, "slot", slot_index)
 
 
 func _on_skill_hover_enter(node: Control, skills_column: SkillsColumn) -> void:
@@ -1079,7 +1064,6 @@ func connect_boss_hover_signals() -> void:
 
 # Clear all player selections and reset UI after combat
 func clear_selections_and_ui() -> void:
-	print("\n=== Clearing Player Selections & UI ===")
 	
 	for player_index in range(player_selections.size()):
 		var player: Entity = players_ref[player_index]
@@ -1098,8 +1082,6 @@ func clear_selections_and_ui() -> void:
 			
 			# Reset the visual UI for this slot
 			_reset_bar_slot_visual(player_index, slot_index)
-			
-			print("[clear] Player", player_index + 1, "Slot", slot_index, "cleared")
 		
 		# Clear the "used_in_slot" markers from column nodes
 		var skills_column: SkillsColumn = player.get_node_or_null("SkillsColumn")
@@ -1146,8 +1128,6 @@ func replace_used_skills_in_grid() -> void:
 				
 				# Check if this node was used in this slot
 				if node.get_meta("used_in_slot", -1) == slot_index:
-					print("  [replace] Column", column_idx + 1, "Row", row_idx + 1, 
-						"used Skill", slot.skill.skill_id, "- replacing")
 					
 					# Get a new skill from this column's pool
 					if column_idx < column_pools.size():

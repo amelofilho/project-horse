@@ -18,7 +18,7 @@ metadata/_edit_horizontal_guides_ = [74.0]
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 345.0
+offset_right = 533.0
 offset_bottom = 189.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_xcspw")
 
@@ -44,7 +44,7 @@ vertical_alignment = 2
 layout_mode = 0
 offset_left = 132.0
 offset_top = 73.0
-offset_right = 346.0
+offset_right = 531.0
 offset_bottom = 181.0
 text = "Description: This 
 ability does absol-

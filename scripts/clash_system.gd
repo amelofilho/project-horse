@@ -39,11 +39,20 @@ func _roll_skill(skill, active_coins: int) -> Dictionary:
 		if rng.randf() < skill.odds:
 			heads += 1
 			# when rolling a heads, add bonus roll on top of base roll
-			print ("heads! add ", skill.bonus_roll, " to calc")
+			print ("heads! add ", skill.bonus_roll + skill.bonus_temp, " to calc")
+			
+			# NOTE: status effect-related handling handled here
+			if (skill.status_type != "None"):
+				_handle_status_effect(skill, true)
 		else:
 			print ("tails!")
+			
+			# NOTE: status effect-related handling handled here
+			if (skill.status_type != "None"):
+				_handle_status_effect(skill, false)
 	
-	var total := int(skill.base_roll + heads * skill.bonus_roll)
+	var total := int(skill.crit_mult * 
+			(skill.base_roll + heads * (skill.bonus_roll + skill.bonus_temp)))
 	return {
 		"total": total,
 		"heads": heads,
@@ -53,6 +62,7 @@ func _roll_skill(skill, active_coins: int) -> Dictionary:
 
 # Public helper for direct (non-clash) damage rolls
 func roll_skill_for_damage(skill) -> Dictionary:
+	_on_use_status_effect(skill) # NOTE: Handles [On Use] effects
 	return _roll_skill(skill, int(skill.coins))
 
 
@@ -74,6 +84,10 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 	var defender_skill = defender_slot.skill
 	var attacker_coins: int = int(attacker_skill.coins)
 	var defender_coins: int = int(defender_skill.coins)
+	
+	# NOTE: Handles [On Use] effects ONCE before clash begins
+	_on_use_status_effect(attacker_skill)
+	_on_use_status_effect(defender_skill)
 	
 	var result := {
 		"attacker_slot": attacker_slot,
@@ -222,3 +236,96 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 	emit_signal("clash_finished", winner_slot, loser_slot, damage_total, result)
 	
 	return result
+
+
+# For skills that have "[On Use]"
+func _on_use_status_effect(skill) -> void:
+	
+	# If skill.bonus_roll is directly modified, it affects the values for ALL skills of that type.
+	# As such, this is mainly used as a way to incorporate "bonus damage for bonus roll"
+	skill.bonus_temp = 0.0 
+	skill.crit_mult = 1.0
+	
+	# Goldilocks
+	if (skill.status_type == "Mana"):
+		
+		# Too Hot
+		if (skill.skill_id == 2):
+			
+			# Passive 1: If below 10 Mana, lose health and gain Mana.
+			# NOTE: If the player is at 1 health, this should not kill the player
+			if (skill.player.resource < 10):
+				skill.player.current_hp = max(skill.player.current_hp - 2, 1)
+				skill.player.resource += 10
+			
+			# Passive 2: Consume Mana and gain Bonus DMG (up to 4 times)
+			for i in range(4):
+				if skill.player.resource < 5:
+					break
+				
+				skill.player.resource -= 5
+				skill.bonus_temp += 2
+		
+		
+	elif (skill.status_type == "Adren"):
+		
+		# Red Rose Petals
+		if (skill.skill_id == 2):
+			
+			# Consume Adren and gain Bonus DMG (up to 1 times)
+			for i in range(1):
+				if skill.player.resource < 2:
+					break
+				
+				skill.player.resource -= 2
+				skill.bonus_temp += 2
+			
+	# Skill not found, return
+	return
+			
+
+# The alternative would be having a cascading sequence of if elses =3
+func _handle_status_effect(skill, head: bool = false) -> void:
+	
+	# Goldilocks
+	if (skill.status_type == "Mana"):
+		print("Player 1's Mana: ", skill.player.resource)
+		
+		# Too Cold
+		# If heads, gain resource.
+		if (skill.skill_id == 1):
+			if (head):
+				skill.player.resource += 3
+			return
+		
+		# Just Right
+		# If heads, gain 2 Mana and deal bonus damage equal to Mana
+		elif (skill.skill_id == 3):
+			if (head):
+				skill.player.resource += 2
+				skill.bonus_temp = min(skill.player.resource, 10)
+			return;
+	
+	elif (skill.status_type == "Adren"):
+		print("Player 2's Adren: ", skill.player.resource)
+		
+		# Skill 1
+		if (skill.skill_id == 1):
+			if (head):
+				skill.player.resource += 2
+			return;
+		
+		# Skill 2
+		elif (skill.skill_id == 2):
+			return; 
+		
+		# Skill 3
+		elif (skill.skill_id == 3):
+			if (head):
+				skill.crit_mult += 0.2
+			return;
+		
+		return;
+	
+	# Skill had no type (boss)
+	return;

@@ -2,7 +2,7 @@ class_name Entity
 extends CharacterBody2D
 
 # Combat state
-var current_hp: float = 0.0
+@export var current_hp: float = 50.0
 @export var max_hp: float = 50.0
 var is_defending: bool = false
 var is_dead: bool = false
@@ -14,6 +14,7 @@ var max_skill_slots: int = 3
 # Movement
 @export var speed: float = 5.0
 @export var moves: int = 1 # Number of allowed moves
+@export var resource: int = 0 # For status effects
 
 # Animation and visuals
 @onready var sprite: Sprite2D = $Sprite2D

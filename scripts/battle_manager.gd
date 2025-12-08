@@ -152,9 +152,6 @@ func _get_boss_skills() -> Array:
 		)
 		skills.append(skill_slot)
 		
-		# Print the boss' skill selection
-		print(" [_get_boss_skills()] Boss Slot %d -> Player %d Slot %d (Skill %d)" %
-			[boss_slot_index + 1, target_player_index + 1, target_slot_index + 1, random_skill.skill_id])
 	
 	return skills
 

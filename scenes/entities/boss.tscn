@@ -18,6 +18,7 @@ size = Vector2(130, 132)
 
 [node name="Boss" type="CharacterBody2D"]
 script = ExtResource("1_mdhvr")
+current_hp = 100.0
 max_hp = 100.0
 speed = 4.0
 
@@ -66,24 +67,24 @@ icon_texture = ExtResource("7_c3gvn")
 script = ExtResource("6_pqlna")
 skill_id = 2
 description = "Boss Attack #2"
-base_roll = 6.0
-bonus_roll = 15.0
+base_roll = 5.0
+bonus_roll = 10.0
 icon_texture = ExtResource("8_5joy1")
 
 [node name="Skill3" type="Node" parent="SkillContainer"]
 script = ExtResource("6_pqlna")
 skill_id = 3
 description = "Boss Attack #3"
-base_roll = 15.0
-bonus_roll = 20.0
+base_roll = 5.0
+bonus_roll = 10.0
 icon_texture = ExtResource("9_woypx")
 
 [node name="Skill4" type="Node" parent="SkillContainer"]
 script = ExtResource("6_pqlna")
 skill_id = 4
 description = "Boss Attack #4"
-base_roll = 15.0
-bonus_roll = 20.0
+base_roll = 5.0
+bonus_roll = 10.0
 icon_texture = ExtResource("9_woypx")
 
 [node name="Skill5" type="Node" parent="SkillContainer"]
@@ -91,8 +92,8 @@ script = ExtResource("6_pqlna")
 skill_id = 5
 description = "Boss Attack #5
 "
-base_roll = 15.0
-bonus_roll = 20.0
+base_roll = 10.0
+bonus_roll = 15.0
 icon_texture = ExtResource("9_woypx")
 
 [connection signal="mouse_entered" from="HoverArea" to="." method="_on_hover_area_mouse_entered"]
