@@ -96,13 +96,17 @@ Team Member 2
     asdf
 
 # Justin Pak
-  ### Producer
-  Project Trello: https://trello.com/b/zCzT0oPH/project-horse-ecs-179
-  ### Visual Cohesion/Style Guide
-  asdf
-  ### Other Contributions
-  #### Test
-  asdf
+### Producer
+High Level Design - The game's original high level design consists of separate classes being handled by a global state machine. The intent was to break down the subsystems so that they are compartmentalized and can be worked on independently of each other.
+  
+<img src="DocImages/high-level-1.jpg" width="500"/>
+  
+Project Trello: https://trello.com/b/zCzT0oPH/project-horse-ecs-179
+### Visual Cohesion/Style Guide
+asdf
+### Other Contributions
+#### Test
+asdf
     
 For each team member, you shoudl work of your role and sub-role in terms of the content of the course. Please look at the role sections below for specific instructions for each role.
 
