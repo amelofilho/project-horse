@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxup8n4v6j744"]
+[gd_scene load_steps=6 format=3 uid="uid://dxup8n4v6j744"]
 
 [ext_resource type="Script" uid="uid://dyuqky6004u2x" path="res://scripts/battle_manager.gd" id="2_1hapx"]
-[ext_resource type="Script" uid="uid://u8e82gkg5jsp" path="res://scripts/dialogue/cutscene_manager.gd" id="2_7ydql"]
 [ext_resource type="PackedScene" uid="uid://bvedsk338f7yw" path="res://scenes/UI/SkillsColumn.tscn" id="3_85w88"]
 
 [sub_resource type="Theme" id="Theme_1hapx"]
@@ -47,9 +46,6 @@ offset_left = 769.0
 offset_top = 396.0
 offset_right = 809.0
 offset_bottom = 419.0
-
-[node name="CutsceneManager" type="Node" parent="."]
-script = ExtResource("2_7ydql")
 
 [node name="SkillsColumn" parent="." instance=ExtResource("3_85w88")]
 visible = false
