@@ -37,6 +37,3 @@ mono_crash.*.json
 
 # Dummy HTML5 export presets file for continuous integration
 !.github/dist/export_presets.cfg
-
-# Ignore demo dialogue folder
-/demo/dialogue
