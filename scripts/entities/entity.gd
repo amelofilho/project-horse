@@ -110,7 +110,8 @@ func get_hp_percentage() -> float:
 # Checks if entity is alive
 func is_alive() -> bool:
 	return not is_dead and current_hp > 0
-	
+
+
 func _process(delta: float) -> void:
 	if !animation_player.is_playing():
 		if is_clashing:
