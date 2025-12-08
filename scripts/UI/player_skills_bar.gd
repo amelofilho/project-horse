@@ -2,7 +2,7 @@
 class_name SkillsBar
 extends Control
 
-@export var y_offset := -130
+#@export var y_offset := -130
 
 @onready var bar_3: Control = $TripleSkills
 
@@ -11,8 +11,9 @@ extends Control
 
 
 func _ready():
+	pass
 	# position skill boxes above player
-	position.y = y_offset
+	#position.y = y_offset
 
 
 func generate_placeholder_skill_icons():

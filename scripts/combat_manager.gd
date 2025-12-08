@@ -5,6 +5,7 @@ var players: Array[Entity] = []
 var boss: Entity
 var clash_system: ClashSystem
 
+signal direct_attack_coins(user: Entity, heads: int, total_coins: int, total_dmg: int)
 
 func resolve_skills(skill_queue: Array) -> void:
 	print("\n--- Resolving %d skills ---" % skill_queue.size())
@@ -41,30 +42,36 @@ func resolve_skills(skill_queue: Array) -> void:
 			print("\n>>> CLASH DETECTED: %s ↔ %s" % [skill_slot.user.name, opposing_slot.user.name])
 			
 			# Run the clash
-			var clash_result: Dictionary = clash_system.run_clash(skill_slot, opposing_slot)
+			var clash_result: Dictionary = await clash_system.run_clash(skill_slot, opposing_slot)
 			
 			var damage_total: int = clash_result["damage_roll"]
 			var winner_is_attacker: bool = clash_result["winner_is_attacker"]
 			
 			print("CLASH WINNER: ")
 			
+			#wait for coin animation
+			await get_tree().create_timer(2.5).timeout
+			
 			# Apply damage to the loser
 			if damage_total > 0:
 				if winner_is_attacker:
 					var loser: Entity = opposing_slot.user
 					loser.take_damage(damage_total)
+					skill_slot.user.play_animation("attack1")
+					skill_slot.user.is_clashing = false
 					print("%s takes %d clash damage!" % [loser.name, damage_total])
 				else:
 					var loser: Entity = skill_slot.user
 					loser.take_damage(damage_total)
+					opposing_slot.user.play_animation("attack1")
+					opposing_slot.user.is_clashing = false
 					print("%s takes %d clash damage!" % [loser.name, damage_total])
+			
+			await get_tree().create_timer(1).timeout
 			
 			# Mark both skills as used
 			consumed_slots.append(skill_slot)
 			consumed_slots.append(opposing_slot)
-			
-			# wait before next attack
-			await get_tree().create_timer(1.5).timeout
 			continue
 		
 		# direct attack (when no clash)
@@ -74,7 +81,16 @@ func resolve_skills(skill_queue: Array) -> void:
 			var dmg_detail: Dictionary = clash_system.roll_skill_for_damage(skill_slot.skill)
 			var dmg: int = dmg_detail["total"]
 			
+			var heads := int(dmg_detail["heads"])
+			var total_coins := int(skill_slot.skill.coins)
+			
+			emit_signal("direct_attack_coins", skill_slot.user, heads, total_coins, dmg)
+			
+			#wait for coin animation
+			await get_tree().create_timer(2.5).timeout
+			
 			target.take_damage(dmg)
+			skill_slot.user.play_animation("attack1")
 			print("%s deals %d damage to %s" %
 				[skill_slot.user.name, dmg, target.name])
 		
@@ -82,9 +98,6 @@ func resolve_skills(skill_queue: Array) -> void:
 		
 		if target.is_dead:
 			print("%s has been defeated!" % target.name)
-		
-		#wait before next attack
-		await get_tree().create_timer(1.5).timeout
 
 
 # Helper function: Find the skill slot belonging to the target entity

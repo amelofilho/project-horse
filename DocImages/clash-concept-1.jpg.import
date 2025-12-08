@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://86x0xwc60pgt"
-path="res://.godot/imported/ui-concept-1.jpeg-36faad337ff530113cb4e028549a8ac5.ctex"
+uid="uid://b8nimbiilvqgu"
+path="res://.godot/imported/clash-concept-1.jpg-6e3c7c0dfc1374941b45198d94f2ccf4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DocImages/ui-concept-1.jpeg"
-dest_files=["res://.godot/imported/ui-concept-1.jpeg-36faad337ff530113cb4e028549a8ac5.ctex"]
+source_file="res://DocImages/clash-concept-1.jpg"
+dest_files=["res://.godot/imported/clash-concept-1.jpg-6e3c7c0dfc1374941b45198d94f2ccf4.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://86x0xwc60pgt"
-path="res://.godot/imported/ui-concept-1.jpeg-36faad337ff530113cb4e028549a8ac5.ctex"
+uid="uid://oc7a5cuwemxh"
+path="res://.godot/imported/bear-Sheet.png-ba052fe093b09c5541fe231f3b751923.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DocImages/ui-concept-1.jpeg"
-dest_files=["res://.godot/imported/ui-concept-1.jpeg-36faad337ff530113cb4e028549a8ac5.ctex"]
+source_file="res://assets/UI_Visuals/sprites/bear-Sheet.png"
+dest_files=["res://.godot/imported/bear-Sheet.png-ba052fe093b09c5541fe231f3b751923.ctex"]
 
 [params]
 

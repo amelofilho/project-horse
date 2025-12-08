@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://sfsrb46ufhh0"]
+[gd_scene load_steps=18 format=3 uid="uid://sfsrb46ufhh0"]
 
 [ext_resource type="Script" uid="uid://c8xl5gilwultu" path="res://scripts/entities/boss.gd" id="1_mdhvr"]
-[ext_resource type="Texture2D" uid="uid://c6f2iduw0xyl4" path="res://icon.svg" id="2_ac02r"]
+[ext_resource type="Texture2D" uid="uid://oc7a5cuwemxh" path="res://assets/UI_Visuals/sprites/bear-Sheet.png" id="2_t365j"]
 [ext_resource type="PackedScene" uid="uid://kyry78favrgh" path="res://scenes/UI/boss_skills_bar.tscn" id="3_ac02r"]
 [ext_resource type="PackedScene" uid="uid://dlhdnhe4yr8gw" path="res://scenes/UI/entity_health_bar.tscn" id="4_g24gc"]
 [ext_resource type="Script" uid="uid://dkqi6rkvgvfov" path="res://scripts/skills/skill_container.gd" id="5_t365j"]
@@ -10,11 +10,99 @@
 [ext_resource type="Texture2D" uid="uid://ccapfxxjtvyfw" path="res://assets/UI_Visuals/Skills_Icons/melee_buff.png" id="8_5joy1"]
 [ext_resource type="Texture2D" uid="uid://xaau4uqcyrlx" path="res://assets/UI_Visuals/Skills_Icons/heavy_melee.png" id="9_woypx"]
 
+[sub_resource type="Animation" id="Animation_pqlna"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_t365j"]
+resource_name = "clash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_5joy1"]
+resource_name = "damaged"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_c3gvn"]
+resource_name = "Idle"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_woypx"]
+resource_name = "roar"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5joy1"]
+_data = {
+&"RESET": SubResource("Animation_pqlna"),
+&"attack1": SubResource("Animation_woypx"),
+&"clash": SubResource("Animation_t365j"),
+&"damaged": SubResource("Animation_5joy1"),
+&"idle": SubResource("Animation_c3gvn")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4agdh"]
 size = Vector2(134, 134)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g24gc"]
-size = Vector2(130, 132)
+size = Vector2(432, 295)
 
 [node name="Boss" type="CharacterBody2D"]
 script = ExtResource("1_mdhvr")
@@ -23,32 +111,39 @@ max_hp = 100.0
 speed = 4.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5joy1")
+}
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4agdh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.98797375, 0.45552784, 0.3811656, 1)
-self_modulate = Color(1, 0.76369, 0.74355716, 1)
-texture = ExtResource("2_ac02r")
+position = Vector2(4, 28)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_t365j")
+hframes = 5
+vframes = 4
 
 [node name="HoverArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HoverArea"]
+position = Vector2(6, 23)
 shape = SubResource("RectangleShape2D_g24gc")
 
 [node name="SkillsBar" parent="." instance=ExtResource("3_ac02r")]
 offset_left = -146.0
-offset_top = -118.0
+offset_top = -236.0
 offset_right = -146.0
-offset_bottom = -118.0
+offset_bottom = -236.0
 scale = Vector2(1, 1)
 
 [node name="HealthBar" parent="." instance=ExtResource("4_g24gc")]
-offset_left = -112.0
-offset_top = 61.0
-offset_right = -112.0
-offset_bottom = 61.0
+offset_left = -100.0
+offset_top = 252.0
+offset_right = -100.0
+offset_bottom = 252.0
 scale = Vector2(0.6, 0.6)
 metadata/_edit_vertical_guides_ = [0.0, 1920.0, 990.0]
 

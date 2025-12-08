@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://86x0xwc60pgt"
-path="res://.godot/imported/ui-concept-1.jpeg-36faad337ff530113cb4e028549a8ac5.ctex"
+uid="uid://db5k1fkbt25dq"
+path="res://.godot/imported/sketch-concept-2.png-7bb134d678dfc005cd8855bc42deda3b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DocImages/ui-concept-1.jpeg"
-dest_files=["res://.godot/imported/ui-concept-1.jpeg-36faad337ff530113cb4e028549a8ac5.ctex"]
+source_file="res://DocImages/sketch-concept-2.png"
+dest_files=["res://.godot/imported/sketch-concept-2.png-7bb134d678dfc005cd8855bc42deda3b.ctex"]
 
 [params]
 

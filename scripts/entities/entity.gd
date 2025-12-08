@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var max_hp: float = 50.0
 var is_defending: bool = false
 var is_dead: bool = false
+var is_clashing: bool = false
 
 # Skills system
 @export var skills: Array[Skill] = []
@@ -109,3 +110,11 @@ func get_hp_percentage() -> float:
 # Checks if entity is alive
 func is_alive() -> bool:
 	return not is_dead and current_hp > 0
+
+
+func _process(delta: float) -> void:
+	if !animation_player.is_playing():
+		if is_clashing:
+			play_animation("clash")
+		else:
+			play_animation("idle")

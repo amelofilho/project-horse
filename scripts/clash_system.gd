@@ -3,6 +3,7 @@ extends Node
 
 #signals for clash states
 signal clash_started(attacker_slot, defender_slot)
+
 signal clash_round_resolved(
 	round_index: int,
 	attacker_total: int,
@@ -12,13 +13,16 @@ signal clash_round_resolved(
 	attacker_coins_left: int,
 	defender_coins_left: int
 )
+
 signal clash_tie(round_index: int, total: int)
+
 signal clash_coin_lost(
 	round_index: int,
 	loser_is_attacker: bool,
 	attacker_coins_left: int,
 	defender_coins_left: int
 )
+
 signal clash_finished(
 	winner_slot,
 	loser_slot,
@@ -53,6 +57,7 @@ func _roll_skill(skill, active_coins: int) -> Dictionary:
 	
 	var total := int(skill.crit_mult * 
 			(skill.base_roll + heads * (skill.bonus_roll + skill.bonus_temp)))
+	
 	return {
 		"total": total,
 		"heads": heads,
@@ -101,6 +106,10 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 	}
 	
 	emit_signal("clash_started", attacker_slot, defender_slot)
+	attacker_slot.user.is_clashing = true
+	attacker_slot.user.play_animation("clash")
+	defender_slot.user.is_clashing = true
+	defender_slot.user.play_animation("clash")
 	
 	var round_index := 0
 	
@@ -175,6 +184,8 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 			# Tie -> reroll
 			emit_signal("clash_tie", round_index, atk_total)
 			print("tie!")
+			defender_slot.user.play_animation("attack1")
+			attacker_slot.user.play_animation("attack1")
 		
 		round_data["attacker_coins_after"] = attacker_coins
 		round_data["defender_coins_after"] = defender_coins
@@ -192,6 +203,17 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 			defender_coins
 		)
 		round_index += 1
+		#wait to resolve round
+		await get_tree().create_timer(2.5).timeout
+		
+		#play animations
+		if round_data["loser"] == "defender":
+			attacker_slot.user.play_animation("attack1")
+		elif round_data["loser"] == "attacker":
+			defender_slot.user.play_animation("attack1")
+		else:
+			attacker_slot.user.play_animation("attack1")
+			defender_slot.user.play_animation("attack1")
 	
 	# ----------------------------------------------------
 	# END OF LOOP
@@ -234,7 +256,7 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 	result["damage_detail"] = damage_detail
 	
 	emit_signal("clash_finished", winner_slot, loser_slot, damage_total, result)
-	
+	defender_slot.user.is_clashing = false
 	return result
 
 
