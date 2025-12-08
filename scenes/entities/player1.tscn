@@ -51,40 +51,51 @@ offset_left = -44.0
 offset_top = 107.0
 offset_right = 55.0
 offset_bottom = 130.0
-text = "Player Name"
+text = "Goldilocks"
+horizontal_alignment = 1
 
 [node name="SkillContainer" type="Node" parent="."]
 script = ExtResource("6_l2mvf")
 
-[node name="Skill1" type="Node" parent="SkillContainer"]
+[node name="Skill1" type="Node" parent="SkillContainer" node_paths=PackedStringArray("player")]
 script = ExtResource("6_qgttk")
 skill_id = 1
-skill_name = "Swing"
-description = "Swings a sword"
+skill_name = "Too Cold"
+description = "[On Head]: Gain 3 Mana
+"
 base_roll = 4.0
-bonus_roll = 8.0
+bonus_roll = 6.0
+coins = 2
 icon_texture = ExtResource("7_o1hco")
 copies_in_deck = 6
+status_type = "Mana"
+player = NodePath("../..")
 
-[node name="Skill2" type="Node" parent="SkillContainer"]
+[node name="Skill2" type="Node" parent="SkillContainer" node_paths=PackedStringArray("player")]
 script = ExtResource("6_qgttk")
 skill_id = 2
-skill_name = "Jab"
-description = "Quick jab with a high success rate"
-base_roll = 5.0
-bonus_roll = 10.0
-odds = 0.8
+skill_name = "Too Hot"
+description = "[On Use]: If below 10 Mana, lose 2 Health and gain 10 Mana.
+[On Use]: Consume 5 mana for +2 bonus DMG (up to 4 times)."
+base_roll = 4.0
+bonus_roll = 6.0
+coins = 3
+odds = 0.6
 icon_texture = ExtResource("8_7dpir")
 copies_in_deck = 4
+status_type = "Mana"
+player = NodePath("../..")
 
-[node name="Skill3" type="Node" parent="SkillContainer"]
+[node name="Skill3" type="Node" parent="SkillContainer" node_paths=PackedStringArray("player")]
 script = ExtResource("6_qgttk")
 skill_id = 3
-skill_name = "Charge!"
-description = "Charging attack"
-base_roll = 10.0
-bonus_roll = 15.0
+skill_name = "Just Right"
+description = "[On Head]: Gain 2 Mana and deal bonus DMG equal to Mana (up to 10 bonus DMG)."
+base_roll = 5.0
+bonus_roll = 5.0
 coins = 2
-odds = 0.6
+odds = 0.7
 icon_texture = ExtResource("9_mfpq1")
 copies_in_deck = 2
+status_type = "Mana"
+player = NodePath("../..")

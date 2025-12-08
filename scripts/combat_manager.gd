@@ -46,6 +46,8 @@ func resolve_skills(skill_queue: Array) -> void:
 			var damage_total: int = clash_result["damage_roll"]
 			var winner_is_attacker: bool = clash_result["winner_is_attacker"]
 			
+			print("CLASH WINNER: ")
+			
 			# Apply damage to the loser
 			if damage_total > 0:
 				if winner_is_attacker:
