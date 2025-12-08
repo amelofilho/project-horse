@@ -23,6 +23,12 @@ var UI_Test_System: BossFightManager
 var players: Array = []
 var enemy: Entity
 
+#store clash participants
+var clash_attacker
+var clash_defender
+var clash_loser_is_attacker:bool
+
+@onready var coin_scene := preload("res://scenes/UI/coin.tscn")
 
 # Initialize subsystems and start battle
 func _ready():
@@ -46,9 +52,16 @@ func _initialize_subsystems():
 	clash_system = ClashSystem.new()
 	add_child(clash_system)
 	
+	clash_system.clash_started.connect(_on_clash_started)
+	clash_system.clash_round_resolved.connect(_on_clash_round_resolved)
+	clash_system.clash_tie.connect(_on_clash_tie)
+	clash_system.clash_coin_lost.connect(_on_clash_coin_lost)
+	clash_system.clash_finished.connect(_on_clash_finished)
+	
 	# Initialize combat manager
 	combat_manager = CombatManager.new()
 	add_child(combat_manager)
+	combat_manager.direct_attack_coins.connect(_on_direct_attack_coins)
 	
 	# Wire clash system into combat manager
 	combat_manager.clash_system = clash_system
@@ -208,3 +221,114 @@ func _end_battle():
 
 func _on_start_combat_pressed() -> void:
 	action_handler.request_combat_start()
+	
+func _on_clash_started(attacker_slot, defender_slot) -> void:
+	print("Clash started: %s vs %s" % [attacker_slot.user.name, defender_slot.user.name])
+	clash_attacker = attacker_slot.user
+	clash_defender = defender_slot.user
+
+func get_coin_position(coin_num: int, total_coins: int, spacing: float = 70.0) -> float:
+	var centered_index := coin_num - (total_coins - 1) / 2.0
+	return centered_index * spacing
+
+
+func _on_clash_round_resolved(
+		round_index,
+		attacker_total, defender_total,
+		attacker_heads, defender_heads,
+		attacker_coins_left, defender_coins_left):
+	
+	# Spawn & animate attacker's coins
+	if clash_loser_is_attacker:
+		attacker_coins_left += 1
+		
+	for i in range(attacker_coins_left):
+		var coin = coin_scene.instantiate()
+		add_child(coin)
+		
+		# Compute horizontal offset
+		var offset_x := get_coin_position(i, attacker_coins_left)
+		
+		# Default Y position above attacker’s head:
+		var base_pos : Vector2 = clash_attacker.global_position + Vector2(0, -120)
+		
+		coin.global_position = base_pos + Vector2(offset_x, 0)
+		
+		# check if first coin should break
+		if clash_loser_is_attacker and i == 0:
+			coin.should_break = true
+		
+		# Determine heads/tails for this coin
+		var is_heads :bool = i < attacker_heads
+		coin.spin(is_heads)
+	
+	# Spawn & animate defender's coins
+	if !clash_loser_is_attacker:
+		defender_coins_left += 1
+	for i in range(defender_coins_left):
+		var coin = coin_scene.instantiate()
+		add_child(coin)
+		
+		# Compute horizontal offset
+		var offset_x := get_coin_position(i, defender_coins_left)
+		
+		# Default Y position above attacker’s head:
+		var base_pos : Vector2 = clash_defender.global_position + Vector2(0, -120)
+		
+		# Now assign:
+		coin.global_position = base_pos + Vector2(offset_x, 0)
+		
+		# check if first coin should break
+		if !clash_loser_is_attacker and i == 0:
+			coin.should_break = true
+		
+		# Determine heads/tails for this coin
+		var is_heads :bool = i < defender_heads
+		coin.spin(is_heads)
+
+
+func _on_direct_attack_coins(user: Entity, heads: int, total_coins: int, total_dmg: int) -> void:
+	for i in range(total_coins):
+		var coin = coin_scene.instantiate()
+		add_child(coin)
+		
+		var offset_x := get_coin_position(i, total_coins)
+		var base_pos := user.global_position + Vector2(0, -120)
+		
+		coin.global_position = base_pos + Vector2(offset_x, 0)
+		
+		var is_heads := i < heads
+		coin.spin(is_heads)
+
+
+func _on_clash_tie(round_index, total) -> void:
+	print("Tie in round %d! Both rolled %d" % [round_index + 1, total])
+
+
+func _on_clash_coin_lost(round_index, loser_is_attacker, attacker_coins_left, defender_coins_left) -> void:
+	clash_loser_is_attacker = loser_is_attacker
+
+
+func _on_clash_finished(winner_slot, loser_slot, damage_total, result) -> void:
+	print("Final clash roll: winner = %s, damage = %d" %
+		[winner_slot.user.name, damage_total])
+	
+	var winner: Entity = winner_slot.user
+	var dmg_detail: Dictionary = result["damage_detail"]
+	
+	var heads: int = dmg_detail.get("heads", 0)
+	var total_coins: int = dmg_detail.get("coins", 0)
+	
+	# Animate all coins used in the final damage roll
+	for i in range(total_coins):
+		var coin = coin_scene.instantiate()
+		add_child(coin)
+		
+		# Position above the winner's head
+		var offset_x := get_coin_position(i, total_coins)
+		var base_pos := winner.global_position + Vector2(0, -120)
+		
+		coin.global_position = base_pos + Vector2(offset_x, 0)
+		
+		var is_heads := i < heads
+		coin.spin(is_heads)

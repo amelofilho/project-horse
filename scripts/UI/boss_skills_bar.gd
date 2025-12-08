@@ -1,7 +1,7 @@
 class_name BossSkillsBar
 extends Control
 
-@export var y_offset := -130
+#@export var y_offset := -130
 @onready var bar_3: Control = $TripleSkills
 # The node that will HOLD all arrow instances
 @onready var boss_preview_arrows: Node = $BossPreviewArrows
@@ -16,7 +16,8 @@ var boss: Node = null
 
 func _ready():
 	# position skill boxes y above player
-	position.y = y_offset
+	#position.y = y_offset
+	pass
 
 
 # Call this from Player.gd
