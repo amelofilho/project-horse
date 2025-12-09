@@ -88,9 +88,9 @@ And after a meeting, we decided to go with a modern story book/fairy tale vibe w
     
 Asset Creation
 After agreeing on a creative direction during a meeting, I came up with mockups/initial sketches of what art style we could go for (we ended up not going for any of these), and to see if we wanted to do pixel art or regular art. Along with the main two characters I was also in charge of making and designing the mob sprites.
-<img width="2732" height="2048" alt="IMG_5069" src="https://github.com/user-attachments/assets/12b153fa-7243-41d6-85c2-fde60566cc07" />
-<img width="2732" height="2048" alt="IMG_5087" src="https://github.com/user-attachments/assets/f295c6d6-1147-4534-8e5f-965bffe9203e" />
-<img width="2732" height="2048" alt="IMG_5088" src="https://github.com/user-attachments/assets/b5b53268-bacf-41e2-aaa3-b0eddcc262c6" />
+<img width="683" height="512" alt="IMG_5069" src="https://github.com/user-attachments/assets/12b153fa-7243-41d6-85c2-fde60566cc07" />
+<img width="683" height="512" alt="IMG_5087" src="https://github.com/user-attachments/assets/f295c6d6-1147-4534-8e5f-965bffe9203e" />
+<img width="683" height="512" alt="IMG_5088" src="https://github.com/user-attachments/assets/b5b53268-bacf-41e2-aaa3-b0eddcc262c6" />
 
 I made multiple animations for the two characters, including idle, move, guard, hurt, and several attack animations for each (as we learned in class they should always being doing something even if it's just an idle animation). The two boss sprites also have multiple animations to keep NPC's moving at all times. 
 
