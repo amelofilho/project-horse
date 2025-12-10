@@ -81,33 +81,9 @@ Team Member 2
 
 # Danielle Chang
   ### Animation/Visuals
-Moodboards
-Came up with multiple moodboards on potential themes/directions we could take our game. As I was solely in charge of making most of the assests for the game, I wanted to have a clear direction in which I was gonna go that my team was also on board with. (example of one we didn't use below).
-![moodboard_4](https://github.com/user-attachments/assets/d8a4a537-ede5-42b4-9c4d-20cdace67dd3)
-And after a meeting, we decided to go with a modern story book/fairy tale vibe which we all thought was pretty cool.
-    
-Asset Creation
-After agreeing on a creative direction during a meeting, I came up with mockups/initial sketches of what art style we could go for (we ended up not going for any of these), and to see if we wanted to do pixel art or regular art. Along with the main two characters I was also in charge of making and designing the mob sprites.
-<img width="683" height="512" alt="IMG_5069" src="https://github.com/user-attachments/assets/12b153fa-7243-41d6-85c2-fde60566cc07" />
-<img width="683" height="512" alt="IMG_5087" src="https://github.com/user-attachments/assets/f295c6d6-1147-4534-8e5f-965bffe9203e" />
-<img width="683" height="512" alt="IMG_5088" src="https://github.com/user-attachments/assets/b5b53268-bacf-41e2-aaa3-b0eddcc262c6" />
-
-I made multiple animations for the two characters, including idle, move, guard, hurt, and several attack animations for each (as we learned in class they should always being doing something even if it's just an idle animation). The two boss sprites also have multiple animations to keep NPC's moving at all times. 
-
-Color Pallettes/Overall Mood
-I thought that the colors should also play a role in game feel and after initial character pitches and design, I suggested the idea of doing a more muted/monochromatic color palleteand after some talking with Justin we decided to go ahead with that idea and add in signature colors for each character to kind of represent their fairy tale and make them a little more recognizable.
-      
-Start Screen
-I wanted to make a starting screen for our game because user experience is key to me and I know every detail matters (especially first impressions), so continuing with the idea of story book I made a Start Screen with a story book vibe where it feels like the     .
-    
-Background and other Assests
-I also gave consideration to the .
-    
+    asdf
   ### Narrative Design
-    Color Pallettes/Overall Mood
-
-    Story/Theme
-    
+    asdf
   ### Other Contributions
     asdf
 
@@ -150,7 +126,7 @@ Later, we decided to go for an "urban fairytale" aesthetic that incoporates stor
 
 As assets were being developed, I helped make sure that characters, enemies, and the environment aligned with the visual style that was created.
 
-Color Palette Guidance - When originally deciding upon the game's look Danielle and I originally were going to go for a monochromatic look, but settled upon a muted color palette. We did this for readibility reasons as well as for thematic purposes (the environment is very drab, but the characters have splashes of color like Red Riding Hood's scarf and Goldilock's bow, representing light in a dark world). To ensure the art in the game aligned with the game's aesthetic and narrative, I helped with reviewing the assets being used to make sure they aligned with the game's theming. If I felt something was off, I discussed with Danielle to get her thoughts before deciding if any changes needed to be made. Any color changes were made directly on the image files themselves, saving us time on requiring in-engine color adjustments.
+Color Palette Guidance - I worked with Danielle to ensure the art in the game aligned with the palette that was decided upon (muted colors with clear grayscale values). Art was checked to make sure this aligned with the game's theming and any changes regarding color were made directly on the image files themselves, saving us time on requiring in-engine color adjustments. We were able to do this because we weren't doing anything related to lighting in the game itself.
 ### Other Contributions
 High Level Design - The game's original high level design consists of separate classes being handled by a global state machine. The intent was to break down the subsystems so that they are compartmentalized and can be worked on independently of each other. This system is based on portion of the course that covered different ways of creating systems (specifically the part that covered states).
 
@@ -178,9 +154,12 @@ lectures regarding game design for systems and mechanics. Designs were written o
 
 Skill Icons - Created the skill icons for both characters since no one had created them yet at the time.
 
-Audio Asset Acquisition - Looked for audio assets since none had been found at the time. Found copyright free battle track.
+Audio Asset Acquisition - Looked for audio assets since none had been found at the time.
 
----
+
+
+
+
     
 For each team member, you shoudl work of your role and sub-role in terms of the content of the course. Please look at the role sections below for specific instructions for each role.
 
