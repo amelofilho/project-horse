@@ -150,7 +150,7 @@ Later, we decided to go for an "urban fairytale" aesthetic that incoporates stor
 
 As assets were being developed, I helped make sure that characters, enemies, and the environment aligned with the visual style that was created.
 
-Color Palette Guidance - I worked with Danielle to ensure the art in the game aligned with the palette that was decided upon (muted colors with clear grayscale values). Art was checked to make sure this aligned with the game's theming and any changes regarding color were made directly on the image files themselves, saving us time on requiring in-engine color adjustments. We were able to do this because we weren't doing anything related to lighting in the game itself.
+Color Palette Guidance - When originally deciding upon the game's look Danielle and I originally were going to go for a monochromatic look, but settled upon a muted color palette. We did this for readibility reasons as well as for thematic purposes (the environment is very drab, but the characters have splashes of color like Red Riding Hood's scarf and Goldilock's bow, representing light in a dark world). To ensure the art in the game aligned with the game's aesthetic and narrative, I helped with reviewing the assets being used to make sure they aligned with the game's theming. If I felt something was off, I discussed with Danielle to get her thoughts before deciding if any changes needed to be made. Any color changes were made directly on the image files themselves, saving us time on requiring in-engine color adjustments.
 ### Other Contributions
 High Level Design - The game's original high level design consists of separate classes being handled by a global state machine. The intent was to break down the subsystems so that they are compartmentalized and can be worked on independently of each other. This system is based on portion of the course that covered different ways of creating systems (specifically the part that covered states).
 
@@ -178,12 +178,9 @@ lectures regarding game design for systems and mechanics. Designs were written o
 
 Skill Icons - Created the skill icons for both characters since no one had created them yet at the time.
 
-Audio Asset Acquisition - Looked for audio assets since none had been found at the time.
+Audio Asset Acquisition - Looked for audio assets since none had been found at the time. Found copyright free battle track.
 
-
-
-
-
+---
     
 For each team member, you shoudl work of your role and sub-role in terms of the content of the course. Please look at the role sections below for specific instructions for each role.
 
