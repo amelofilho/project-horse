@@ -81,7 +81,7 @@ func take_damage(amount: float) -> void:
 		hb.refresh()
 
 	play_animation("damaged")
-	
+
 	#play sfx
 	var hurtsfx := get_node_or_null("Hurt")
 	if hurtsfx:
@@ -117,7 +117,8 @@ func get_hp_percentage() -> float:
 # Checks if entity is alive
 func is_alive() -> bool:
 	return not is_dead and current_hp > 0
-	
+
+
 func roll_speed() -> void:
 	rand_speed = randf_range(speed_low, speed_high)
 	#update speed display
@@ -125,8 +126,10 @@ func roll_speed() -> void:
 	if sd:
 		sd.update()
 
+
 func get_current_speed() -> int:
 	return rand_speed
+
 
 func _process(_delta: float) -> void:
 	if !animation_player.is_playing():
