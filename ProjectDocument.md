@@ -30,7 +30,7 @@ If your project contains code that: 1) your team did not write, and 2) does not 
 
 If you used tutorials or other intellectual guidance to create aspects of your project, include reference to that information as well.
 
-Agentic Tools were used during the creation of an early draft of the UI code and for minor debugging.
+Agentic tools were used for prototying an early draft of the UI code and for minor debugging.
 
 # Team Member Contributions
 
@@ -163,11 +163,13 @@ Rough quarter... Didn't even have time to get all my deliverables complete :(
 
 # Justin Pak
 ### Producer
-Project Trello: https://trello.com/b/zCzT0oPH/project-horse-ecs-179 - Project planning and task tracking kanban board for helping
+Project Trello (https://trello.com/b/zCzT0oPH/project-horse-ecs-179) - Project planning and task tracking kanban board for helping
 people know what they have to do, when they have to finish, and who has to work on it. I chose to use a Kanban board over a 
 Gantt chart because I thought it would fit better with our team's dynamic and working process.
 Also included were milestones implemented at the start of development. Other than being a part of the producer deliverables, project 
 planning was discussed as a part of class during lectures regarding the project and tools you can use to help with the process.
+
+There were troubles with the team hitting milestones. I should've made the decision to have the team pivot to an idea that better fit the team's capabilities/schedules, but the team wanted to stick with the current game plan and I went against my gut judgement.
 
 GDScript Format Workflow - Made a GitHub workflow for automatically formatting all pushed gdscript files. This allows everyone to 
 code in their own preferred style while ensuring that all final code aligns to one consistent style. This workflow is based on the 
@@ -218,7 +220,7 @@ lectures regarding game design for systems and mechanics. Designs were written o
 
 Skill Icons - Created the skill icons for both characters since no one had created them yet at the time.
 
-Audio Asset Acquisition - Looked for audio assets since none had been found at the time.
+Audio Asset Acquisition - Helped for audio assets since none had been found at the time.
 
 ---
     
