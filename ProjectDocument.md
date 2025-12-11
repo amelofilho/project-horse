@@ -88,12 +88,78 @@ Team Member 2
     asdf
 
 # Adriano Melo Filho
-  ### UI/Input
-    asdf
-  ### Audio
-    asdf
-  ### Other Contributions
-    asdf
+### UI/Input
+1. Skill Population:
+
+![Adriano Skill Selection](project-horse/DocImages/AdrianoProjectDocuments/SkillPopulation.png) 
+
+*(Early version: Px means populated with skill_ID = x)*
+
+I implemented most of the Skill UI system. When the battle begins the [PrelimCombatHandler](https://github.com/okpom/project-horse/blob/main/scripts/prelim_combat_handler.gd) spawns player and initializes each player’s skill deck from their SkillContainer (init_skills()), creating three independent column pools that generate randomized skills to the UI each turn. These pools are applied visually when the handler populates each player’s 3x3 SkillsColumn grid using _populate_columns_with_random_skills() and _apply_column_skills_to_ui() which replaces placeholder nodes with actual TextureRects nodes and attach skill metadata. 
+
+The boss’s skill population follows a separate system. Instead of using column pools or UI grids the boss generates skills freshly each turn through [BattleManager._get_boss_skills()](https://github.com/okpom/project-horse/blob/main/scripts/battle_manager.gd) which uses a placeholder fully random AI *(might be updated after submitting this)*. For each of the three boss slots the function picks a random skill from enemy.skills.pick_random(), randomly selects a player, and randomly selects one of that player’s three skill-bar slots to target. Then it creates a SkillSlot containing the enemy user, the chosen skill, the boss’s slot index and the randomly selected (target_player_index, target_slot_index). Once all three are created, ActionHandler.set_boss_skills() stores them, and ActionHandler.populate_entity_skill_bar() replaces the boss’s placeholder UI with actual TextureRect icons and metadata. 
+
+2. Skill Selection: 
+
+![Adriano Skill Selection](project-horse/DocImages/AdrianoProjectDocuments/SkillSelection.gif)
+
+*(Early version: Populates over head skills by clicking one per bottom column)*
+
+During the Skill Selection phase the [BattleManager](https://github.com/okpom/project-horse/blob/main/scripts/battle_manager.gd) manages all UI interaction and selection logic to the [ActionHandler system](https://github.com/okpom/project-horse/blob/main/scripts/action_handler.gd). 
+First boss skills are generated and displayed using set_boss_skills() and populate_entity_skill_bar() allowing players to see incoming attacks before choosing responses. Then the handler sets up internal player selection structures (setup_selection(players)), generates targeting preview arrows (prepare_preview_arrows()) and attaches click handlers to every selectable UI node via select_player_skills(). Each skill icon in the SkillsColumn is mapped directly to its corresponding bar slot and selection is performed through _on_column_skill_gui_input() which constructs an ActionHandler.SkillSlot object and stores it in player_selections[player][slot]. Clicking again removes the selection (both handled by _on_bar_slot_gui_input() and _reset_bar_slot_visual()).
+
+Players can't begin combat until all required slots are filled; set_skill_for_slot() triggers _check_if_complete() which emits all_selections_complete() only when every slot across all living players contains a valid selection. After combat, the system updates the UI dynamically: consume_used_skills() removes used skills from their column pools and replace_used_skills_in_grid() updates only the specific grid nodes involved in the selection identified through metadata (node.get_meta("used_in_slot")). Finally, clear_selections_and_ui() resets the Skill Bars and clears metadata so the next Skill Selection phase begins with a fresh UI.
+
+3. Boss Targeting:
+
+![Adriano Boss Arrow Preview](project-horse/DocImages/AdrianoProjectDocuments/BossPreviewArrows.gif) BossPreviewArrows.gif
+
+*(Arrows indicates which skill enemy plans on attacking during clash)*
+
+Although it's not going to make the final cut, it's something I spent a fair amount of time on. I implemented the visual targeting preview feature that displays curved red arrows from each boss skill slot to the player slot it plans on hitting during the Skill Selection phase. When the BattleManager finishes generating boss skills the UI call action_handler.prepare_preview_arrows() to rebuild the preview lines every turn. The function works by clearing all old arrows from the BossSkillsBar via bar.boss_preview_arrows.get_children() to guarantee no stale visuals stay around. Then it iterates over each SkillSlot in boss_skills extracting its source_slot_index, target_player_index and target_slot_index and resolving both the start node (boss UI slot) and end node (that player’s SkillsBar slot). For each valid pair, it instantiates a new PreviewArrow from bar.ARROW_SCENE, assigns its node_start and node_end references and adds it to the boss_preview_arrows container. Arrowed are invisible by default so they don’t clutter the UI until needed.
+
+The arrow  is rendered in real time inside PreviewArrow._process() where the script samples the global positions of both UI nodes each frame and generates a smooth curve between them. The arrow is trimmed using trim_start and trim_end so it doesn’t visually overlap the UI icons, and the midpoint of the curve is lifted by curve_height giving each arrow its distinctive high arc. I used two layered Line2D nodes (OutlineLine and MainLine) to create an outlined red effect for clarity. Each arrow recomputes its curve every frame even as UI elements move or animate.
+To control visibility I connected the boss’s HoverArea directly to _on_boss_hover_enter() and _on_boss_hover_exit() using connect_boss_hover_signals(). When the cursor enters the boss model every arrow inside boss_preview_arrows becomes visible including multiple overlapping arrows targeting different players. When the cursor leaves, they all hide again. 
+
+4. Skill Description Boxes:
+
+![Adriano skill description boxes](project-horse/DocImages/AdrianoProjectDocuments/SkillDescriptionBoxesNew.gif)
+
+*(Icons Not Finalized)*
+
+I implemented the foundation for the [Skill Description Box system](https://github.com/okpom/project-horse/blob/main/scripts/UI/skill_description_box.gd) that provides the UI layout and the core API for showing and hiding description information. This included building the SkillDescriptionBox scene (panel, labels, icon slot, stats fields) and writing the initial script with functions such as show_for_skill(), update_icon(), and hide_box(). My group expanded the system by integrating the real logic for loading skill information on hover. Instead of relying on the placeholder show_for_skill() method he embedded the skill description population directly into the hover callback inside ActionHandler (_on_skill_hover_enter). This approach allows the description box to pull the exact skill metadata—display name, description, rolls, coin count, and computed odds—at the moment the mouse hovers over a skill icon in the SkillsColumn. His implementation searches for the correct SkillDescriptionBox instance under the player’s SkillsColumn, accesses all UI nodes inside the panel (Name, SkillDescription, Stats, etc.), and writes the appropriate values taken from the Skill object. This ensures that the description box always reflects accurate, per-skill data.
+
+5. Player/Boss Healthbars:
+
+![Adriano healthbar](project-horse/DocImages/AdrianoProjectDocuments/HealthBar.gif)
+
+I  wrote the [original full HealthBar system](https://github.com/okpom/project-horse/commit/7a5a60d3f4400064cd71287639e9f448e37c6b69#diff-23803dbd84edd299c0f8be7fb2e0807c382ec194944d6eba587189fc7bf92abaR2) where the bar stored its own health values, updated itself when damaged or healed, emitted signals and handled portrait/name setup. My group later simplified and refactored it so the bar no longer manages gameplay logic. Instead the updated [HealthBar](https://github.com/okpom/project-horse/blob/main/scripts/UI/player_health_bar.gd) now attaches to its parent Entity and only reads current_hp and max_hp to update the UI. The Entity.take_damage() method now calls hb.refresh() meaning the entity controls the health logic while the bar only handles display. In short, I created the full original feature, and my group streamlined it into a clean, entity-driven UI component.
+
+### Audio
+1. Gameplay Music:
+
+I implemented a scene driven music system from the [title screen](https://github.com/okpom/project-horse/blob/main/scripts/title_screen.gd), into a [cutscene](https://github.com/okpom/project-horse/blob/main/scripts/dialogue/cutscene_manager.gd) and finally into the [multi phase boss battle](https://github.com/okpom/project-horse/blob/main/scripts/battle_manager.gd). I set up the architecture for the music logic across all affected scenes, while my group helped attach the final audio assets and organize the exported fields in each scene for easier editor control.
+On the [Title Screen](https://github.com/okpom/project-horse/blob/main/scripts/title_screen.gd) I added a dedicated AudioStreamPlayer2D and bound it to a new exported variable menu_music in title_screen.gd. This allows the menu to start playing the assigned track immediately on load using Godot’s autoplay behavior. 
+
+For Cutscenes I expanded the [CutsceneManager](https://github.com/okpom/project-horse/blob/main/scripts/dialogue/cutscene_manager.gd) by introducing a cutscene_music export and a corresponding MusicPlayer node. When a cutscene begins in play_cutscene(), the manager loads the appropriate track, assigns it to the player, and starts playback. When the cutscene ends, _end_cutscene() stops the audio and the system returns control to the boss fight scene. 
+
+State Changing Music:
+
+The Boss Fight required the most work. I added four dedicated audio players to the BossFightManager scene:
+SkillMusicPlayer, CombatMusicPlayer, VictoryMusicPlayer and DefeatMusicPlayer. These players are connected to new exported AudioStream fields in battle_manager.gd: skill_selection_music, combat_music, victory_music and defeat_music. With these exports anyone from group can swap tracks directly in the inspector without touching code.
+
+The main peice of the system is the _update_music() method in [BattleManager](https://github.com/okpom/project-horse/blob/main/scripts/battle_manager.gd). It shuts off all tracks then enables the specific player associated with the current battle state (SKILL_SELECTION, COMBAT, END_WIN, END_LOSS). Music transitions automatically happen whenever the state changes skill selection plays its own theme, combat switches to the main boss music and victory/defeat tracks are triggered when the encounter ends. This makes the soundtrack fully state driven and eliminates earlier ad-hoc checks like if combat_music_player.playing.
+
+Some of the songs I chose:
+
+[RPG Game Music by alkakrab](https://alkakrab.itch.io/50-tracks-rpg-game-music-pack).
+
+[8Bit Fantasy Adventure by xDeviruchi](https://xdeviruchi.itch.io/8-bit-fantasy-adventure-music-pack).
+
+[16Bit Fantasy Adventure by xDeviruchi](https://xdeviruchi.itch.io/16-bit-fantasy-adventure-music-pack).
+
+### Other Contributions
+Rough quarter... Didn't even have time to get all my deliverables complete :(
 
 # Justin Pak
 ### Producer
