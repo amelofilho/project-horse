@@ -148,7 +148,7 @@ Team Member 2
   The Boss Fight required the most work. I added four dedicated audio players to the BossFightManager scene:
   SkillMusicPlayer, CombatMusicPlayer, VictoryMusicPlayer and DefeatMusicPlayer. These players are connected to new exported AudioStream fields in battle_manager.gd: skill_selection_music, combat_music, victory_music and defeat_music. With these exports anyone from group can swap tracks directly in the inspector without touching code.
 
-  The main peice of the system is the _update_music() method in [BattleManager](https://github.com/okpom/project-horse/blob/main/scripts/battle_manager.gd). It shuts off all tracks then enables the specific player associated with the current battle state (SKILL_SELECTION, COMBAT, END_WIN, END_LOSS). Music transitions automatically happen whenever the state changes skill selection plays its own theme, combat switches to the main boss music and victory/defeat tracks are triggered when the encounter ends. This makes the soundtrack fully state driven and eliminates earlier ad-hoc checks like if combat_music_player.playing.
+  The main peice of the system is the _update_music() method in [BattleManager](https://github.com/okpom/project-horse/blob/main/scripts/battle_manager.gd). It shuts off all tracks then enables the specific player associated with the current battle state (SKILL_SELECTION, COMBAT, END_WIN, END_LOSS). Music transitions automatically happen whenever the state changes skill selection plays its own theme, combat switches to the main boss music and victory/defeat tracks are triggered when the encounter ends.
 
 Some of the songs I chose:
 
