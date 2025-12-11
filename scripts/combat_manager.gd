@@ -50,26 +50,42 @@ func resolve_skills(skill_queue: Array) -> void:
 			print("CLASH WINNER: ")
 			
 			#wait for coin animation
-			await get_tree().create_timer(2.5).timeout
+			if winner_is_attacker:
+				skill_slot.user.play_animation("attack1")
+			else:
+				skill_slot.user.play_animation("damaged")
+			await get_tree().create_timer(1).timeout
 			
 			# Apply damage to the loser
 			if damage_total > 0:
 				if winner_is_attacker:
 					var loser: Entity = opposing_slot.user
 					loser.take_damage(damage_total)
-					skill_slot.user.play_animation("attack1")
+					
+					if skill_slot.skill.skill_id == 1:
+						skill_slot.user.play_animation("combo1")
+					elif skill_slot.skill.skill_id == 2:
+						skill_slot.user.play_animation("combo2")
+					elif skill_slot.skill.skill_id == 3:
+						skill_slot.user.play_animation("combo3")
+						
 					skill_slot.user.is_clashing = false
 					opposing_slot.user.is_clashing = false
 					print("%s takes %d clash damage!" % [loser.name, damage_total])
 				else:
 					var loser: Entity = skill_slot.user
 					loser.take_damage(damage_total)
-					opposing_slot.user.play_animation("attack1")
+					if opposing_slot.skill.skill_id == 1:
+						opposing_slot.user.play_animation("combo1")
+					elif opposing_slot.skill.skill_id == 2:
+						opposing_slot.user.play_animation("combo2")
+					elif opposing_slot.skill.skill_id == 3:
+						opposing_slot.user.play_animation("combo3")
 					opposing_slot.user.is_clashing = false
 					skill_slot.user.is_clashing = false
 					print("%s takes %d clash damage!" % [loser.name, damage_total])
 			
-			await get_tree().create_timer(1).timeout
+			await get_tree().create_timer(2.5).timeout
 			
 			# Mark both skills as used
 			consumed_slots.append(skill_slot)
@@ -86,15 +102,22 @@ func resolve_skills(skill_queue: Array) -> void:
 			var heads := int(dmg_detail["heads"])
 			var total_coins := int(skill_slot.skill.coins)
 			
-			emit_signal("direct_attack_coins", skill_slot.user, skill_slot.skill.name, heads, total_coins, dmg)
+			emit_signal("direct_attack_coins", skill_slot.user, skill_slot.skill.skill_name, heads, total_coins, dmg)
 			
 			#wait for coin animation
-			await get_tree().create_timer(2.5).timeout
+			await get_tree().create_timer(1).timeout
 			
 			target.take_damage(dmg)
-			skill_slot.user.play_animation("attack1")
+			if skill_slot.skill.skill_id == 1:
+				skill_slot.user.play_animation("combo1")
+			elif skill_slot.skill.skill_id == 2:
+				skill_slot.user.play_animation("combo2")
+			elif skill_slot.skill.skill_id == 3:
+				skill_slot.user.play_animation("combo3")
 			print("%s deals %d damage to %s" %
 				[skill_slot.user.name, dmg, target.name])
+				
+			await get_tree().create_timer(1.5).timeout
 		
 		consumed_slots.append(skill_slot)
 		

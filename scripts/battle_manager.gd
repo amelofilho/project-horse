@@ -19,6 +19,10 @@ enum State {
 @onready var combat_music_player := $CombatMusicPlayer
 @onready var victory_music_player := $VictoryMusicPlayer
 @onready var defeat_music_player := $DefeatMusicPlayer
+@onready var coin_flip := $CoinFlip
+
+@onready var p1_status := $CanvasLayer/P1Status
+@onready var p2_status := $CanvasLayer/P2Status
 
 var state: State = State.PRE_BATTLE
 
@@ -64,6 +68,7 @@ func _initialize_subsystems():
 	clash_system.clash_tie.connect(_on_clash_tie)
 	clash_system.clash_coin_lost.connect(_on_clash_coin_lost)
 	clash_system.clash_finished.connect(_on_clash_finished)
+	clash_system.status.connect(_on_status)
 	
 
 	# Initialize combat manager
@@ -105,9 +110,16 @@ func _start_skill_selection():
 	state = State.SKILL_SELECTION
 	_update_music()
 	print("\nPhase: Skill Selection\n")
+	
+	#randomize speed order within a range of the character's original speed
+	#boss should USUALLY go first, but can sometimes be outsped by red. Red can sometimes be outsped by yellow
+	for player in players:
+		player.roll_speed()
+	enemy.roll_speed()
+
 
 	# Boss selects its skills FIRST
-	var boss_skills = await _get_boss_skills()
+	var boss_skills = _get_boss_skills()
 
 	# Make boss skills visible to UI
 	action_handler.set_boss_skills(boss_skills)
@@ -157,7 +169,7 @@ func _get_boss_skills() -> Array:
 
 	# TODO: Replace with actual boss AI logic
 	# Boss creates skills that target specific player skill slots
-	for boss_slot_index in range(3):
+	for boss_slot_index in range(randi_range(3, 5)):
 		var random_skill = enemy.skills.pick_random() if enemy.skills.size() > 0 else Skill.new(1)
 
 		# Pick a random player
@@ -187,8 +199,8 @@ func _on_skills_ready(skill_queue: Array):
 	print("\nPhase: Combat")
 	_update_music()
 
-	# Sort all skills by user speed (highest speed first)
-	skill_queue.sort_custom(func(a, b): return a.user.speed > b.user.speed)
+	# Sort all skills by randomized user speed (highest speed first)
+	skill_queue.sort_custom(func(a, b): return a.user.get_current_speed() > b.user.get_current_speed())
 
 	# Let combat manager resolve skills
 	print("Now entering combat_manager from battle_manager")
@@ -209,6 +221,7 @@ func _on_skills_ready(skill_queue: Array):
 		_end_battle()
 	else:
 		# Reset for next turn
+		
 		_start_skill_selection()
 
 
@@ -252,14 +265,19 @@ func _on_clash_started(attacker_slot, defender_slot) -> void:
 	add_child(panel2)
 	
 	# Position near attacker
-	panel.global_position = user.global_position + Vector2(100, -240)
-	panel2.global_position = defender.global_position + Vector2(-240, -240)
-	panel.set_skill(attacker_slot.skill.name)
-	panel2.set_skill(defender_slot.skill.name)
+	if user is Player:
+		panel.global_position = user.global_position + Vector2(100, -240)
+		panel2.global_position = defender.global_position + Vector2(-360, -240)
+	else:
+		panel.global_position = user.global_position + Vector2(-360, -240)
+		panel2.global_position = defender.global_position + Vector2(100, -240)
+	panel.set_skill(attacker_slot.skill.skill_name)
+	panel2.set_skill(defender_slot.skill.skill_name)
 	
 	skill_panels[user] = panel
 	skill_panels[defender] = panel2
 	
+	$ClashStart.play()
 	var banner := clash_banner.instantiate()
 	get_tree().root.add_child(banner)
 	banner.show_text("CLASH!")
@@ -280,6 +298,8 @@ func _on_clash_round_resolved(
 	if clash_loser_is_attacker:
 		attacker_coins_left += 1
 		
+	coin_flip.play()
+	
 	for i in range(attacker_coins_left):
 		var coin = coin_scene.instantiate()
 		add_child(coin)
@@ -300,6 +320,8 @@ func _on_clash_round_resolved(
 		var is_heads :bool = i < attacker_heads
 		coin.spin(is_heads)
 		await get_tree().create_timer(0.2).timeout
+	
+	coin_flip.play()
 	
 	# Spawn & animate defender's coins
 	if !clash_loser_is_attacker:
@@ -333,6 +355,14 @@ func _on_clash_round_resolved(
 
 
 func _on_direct_attack_coins(user: Entity, skill_name: String, heads: int, total_coins: int, total_dmg: int) -> void:
+	$Swoosh.play()
+	#Show banner
+	var banner := clash_banner.instantiate()
+	get_tree().root.add_child(banner)
+	banner.show_text("Direct Attack!")
+	
+	coin_flip.play()
+	
 	for i in range(total_coins):
 		var coin = coin_scene.instantiate()
 		add_child(coin)
@@ -351,7 +381,10 @@ func _on_direct_attack_coins(user: Entity, skill_name: String, heads: int, total
 	add_child(panel)
 	
 	# Position near attacker
-	panel.global_position = user.global_position + Vector2(100, -240)
+	if user is Player:
+		panel.global_position = user.global_position + Vector2(100, -240)
+	else:
+		panel.global_position = user.global_position + Vector2(-360, -240)
 	panel.set_skill(skill_name)
 	
 	skill_panels[user] = panel
@@ -379,6 +412,8 @@ func _on_clash_finished(winner_slot, loser_slot, damage_total, result) -> void:
 	var heads: int = dmg_detail.get("heads", 0)
 	var total_coins: int = dmg_detail.get("coins", 0)
 	
+	coin_flip.play()
+	
 	# Animate all coins used in the final damage roll
 	for i in range(total_coins):
 		var coin = coin_scene.instantiate()
@@ -401,16 +436,21 @@ func _on_clash_finished(winner_slot, loser_slot, damage_total, result) -> void:
 		skill_panels[winner_slot.user].update_roll(damage_total)
 		skill_panels[winner_slot.user].remove_panel()
 		skill_panels.erase(winner_slot.user)
-		
+	
+	$Swoosh.play()
+	
 	var banner := clash_banner.instantiate()
 	get_tree().root.add_child(banner)
-	await get_tree().create_timer(1.2).timeout
 	if winner_slot.user is Player:
 		banner.show_text("Won Clash!")
 	else:
 		banner.show_text("Lost Clash!")
-		
-		
+
+func _on_status(type:String, amount:int):
+	if (type == "Mana"):
+		$CanvasLayer/P1Status.text = ("Mana: " + str(amount))
+	if(type == "Adren"):
+		$CanvasLayer/P2Status.text = ("Adrenaline: " + str(amount))
 
 # changes music depending on the battle state
 func _update_music() -> void:

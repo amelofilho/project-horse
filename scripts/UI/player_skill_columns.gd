@@ -21,7 +21,6 @@ const SKILL_ICONS: Array[Texture2D] = [
 @onready var player_bar: SkillsBar = (get_parent().get_node_or_null("SkillsBar")) as SkillsBar
 
 @export var offset_position: Vector2 = Vector2(600, 0)
-var _original_position: Vector2
 
 var columns: Array
 const ROWS_PER_COLUMN := 3

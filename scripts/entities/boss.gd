@@ -30,3 +30,7 @@ func _on_boss_exit():
 	#
 	#func _on_hover_area_mouse_exited() -> void:
 	#preview_arrows.visible = false
+
+
+func roar():
+	$Roar.play()

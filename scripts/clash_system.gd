@@ -30,6 +30,11 @@ signal clash_finished(
 	result: Dictionary
 )
 
+signal status(
+	status_type,
+	status_owner
+)
+
 var rng := RandomNumberGenerator.new()
 func _ready() -> void:
 	rng.randomize()
@@ -107,9 +112,11 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 	
 	emit_signal("clash_started", attacker_slot, defender_slot)
 	attacker_slot.user.is_clashing = true
-	attacker_slot.user.play_animation("clash")
+	attacker_slot.user.play_animation("guard")
 	defender_slot.user.is_clashing = true
-	defender_slot.user.play_animation("clash")
+	defender_slot.user.play_animation("guard")
+	
+	await get_tree().create_timer(1).timeout
 	
 	var round_index := 0
 	
@@ -204,13 +211,17 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 		)
 		round_index += 1
 		#wait to resolve round
-		await get_tree().create_timer(2.5).timeout
+		await get_tree().create_timer(3).timeout
 		
 		#play animations
+		#if attacker_coins == 0 or defender_coins == 0:
+			#continue
 		if round_data["loser"] == "defender":
 			attacker_slot.user.play_animation("attack1")
+			defender_slot.user.play_animation("guard")
 		elif round_data["loser"] == "attacker":
 			defender_slot.user.play_animation("attack1")
+			attacker_slot.user.play_animation("guard")
 		else:
 			attacker_slot.user.play_animation("attack1")
 			defender_slot.user.play_animation("attack1")
@@ -257,6 +268,8 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 	
 	emit_signal("clash_finished", winner_slot, loser_slot, damage_total, result)
 	loser_slot.user.is_clashing = false
+	loser_slot.user.play_animation("idle")
+	winner_slot.user.is_clashing = false
 	return result
 
 
@@ -318,6 +331,7 @@ func _handle_status_effect(skill, head: bool = false) -> void:
 		if (skill.skill_id == 1):
 			if (head):
 				skill.player.resource += 3
+				emit_signal("status", skill.status_type, skill.player.resource)
 			return
 		
 		# Just Right
@@ -326,6 +340,7 @@ func _handle_status_effect(skill, head: bool = false) -> void:
 			if (head):
 				skill.player.resource += 2
 				skill.bonus_temp = min(skill.player.resource, 10)
+			emit_signal("status", skill.status_type, skill.player.resource)
 			return;
 	
 	elif (skill.status_type == "Adren"):
@@ -335,16 +350,19 @@ func _handle_status_effect(skill, head: bool = false) -> void:
 		if (skill.skill_id == 1):
 			if (head):
 				skill.player.resource += 2
+			emit_signal("status", skill.status_type, skill.player.resource)
 			return;
 		
 		# Skill 2
 		elif (skill.skill_id == 2):
+			emit_signal("status", skill.status_type, skill.player.resource)
 			return; 
 		
 		# Skill 3
 		elif (skill.skill_id == 3):
 			if (head):
 				skill.crit_mult += 0.2
+			emit_signal("status", skill.status_type, skill.player.resource)
 			return;
 		
 		return;

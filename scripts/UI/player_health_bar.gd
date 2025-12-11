@@ -20,11 +20,11 @@ func _update_bar() -> void:
 		return
 
 	var current := int(entity.current_hp)
-	var max := int(entity.max_hp)
+	var max_hp := int(entity.max_hp)
 
-	bar.max_value = max
+	bar.max_value = max_hp
 	bar.value = current
-	label.text = "%d / %d" % [current, max]
+	label.text = "%d / %d" % [current, max_hp]
 
 
 # method called on damage

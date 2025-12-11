@@ -27,3 +27,9 @@ func done():
 	else:
 		await get_tree().create_timer(0.6).timeout
 	queue_free()
+	
+func play_land():
+	$PlayHeads.play()
+	
+func play_shatter():
+	$Shatter.play()

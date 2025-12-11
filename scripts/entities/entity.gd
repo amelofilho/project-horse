@@ -13,7 +13,9 @@ var is_clashing: bool = false
 var max_skill_slots: int = 3
 
 # Movement
-@export var speed: float = 5.0
+@export var speed_low: float = 5
+@export var speed_high: float = 8
+var rand_speed: float
 @export var moves: int = 1 # Number of allowed moves
 @export var resource: int = 0 # For status effects
 
@@ -80,6 +82,11 @@ func take_damage(amount: float) -> void:
 
 	play_animation("damaged")
 
+	#play sfx
+	var hurtsfx := get_node_or_null("Hurt")
+	if hurtsfx:
+		$Hurt.play()
+
 	if current_hp <= 0:
 		die()
 
@@ -112,7 +119,19 @@ func is_alive() -> bool:
 	return not is_dead and current_hp > 0
 
 
-func _process(delta: float) -> void:
+func roll_speed() -> void:
+	rand_speed = randf_range(speed_low, speed_high)
+	#update speed display
+	var sd := get_node_or_null("SpeedDisplay")
+	if sd:
+		sd.update()
+
+
+func get_current_speed() -> int:
+	return rand_speed
+
+
+func _process(_delta: float) -> void:
 	if !animation_player.is_playing():
 		if is_clashing:
 			play_animation("clash")

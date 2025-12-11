@@ -1,12 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bux1266rx2p6v"]
+[gd_scene load_steps=4 format=3 uid="uid://bux1266rx2p6v"]
 
 [ext_resource type="Script" uid="uid://um5jv34twlee" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://bivy5gkn4dj0e" path="res://assets/UI_Visuals/sprites/bg_img_v2.jpg" id="2_tefeu"]
+[ext_resource type="Texture2D" uid="uid://bk55m7rphcwio" path="res://assets/UI_Visuals/sprites/bg_img_v3.png" id="3_sugp2"]
 
 [node name="World" type="Node"]
 script = ExtResource("1_0wfyh")
 
 [node name="BgImg" type="Sprite2D" parent="."]
-position = Vector2(2.499939, -2.5000916)
-scale = Vector2(3.1808333, 3.2340744)
+position = Vector2(5.0000005, -176)
+scale = Vector2(2.0133333, 2.1244447)
 texture = ExtResource("2_tefeu")
+
+[node name="BgImg2" type="Sprite2D" parent="."]
+position = Vector2(12, -196)
+scale = Vector2(2, 2.033)
+texture = ExtResource("3_sugp2")
