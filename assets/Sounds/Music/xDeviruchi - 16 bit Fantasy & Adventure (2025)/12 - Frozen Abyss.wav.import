@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://k2eywsddiijb"
+path="res://.godot/imported/12 - Frozen Abyss.wav-d5515d9975fb3df8ef9d54ff72618ea5.sample"
+
+[deps]
+
+source_file="res://assets/Sounds/Music/xDeviruchi - 16 bit Fantasy & Adventure (2025)/12 - Frozen Abyss.wav"
+dest_files=["res://.godot/imported/12 - Frozen Abyss.wav-d5515d9975fb3df8ef9d54ff72618ea5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

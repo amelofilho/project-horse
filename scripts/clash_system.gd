@@ -256,7 +256,7 @@ func run_clash(attacker_slot, defender_slot) -> Dictionary:
 	result["damage_detail"] = damage_detail
 	
 	emit_signal("clash_finished", winner_slot, loser_slot, damage_total, result)
-	defender_slot.user.is_clashing = false
+	loser_slot.user.is_clashing = false
 	return result
 
 

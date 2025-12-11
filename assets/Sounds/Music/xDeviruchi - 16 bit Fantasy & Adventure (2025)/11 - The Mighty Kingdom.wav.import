@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://btjv34g23e5vp"
+path="res://.godot/imported/11 - The Mighty Kingdom.wav-3d2d5a5aca6414a99e85a9ee27b7fd8f.sample"
+
+[deps]
+
+source_file="res://assets/Sounds/Music/xDeviruchi - 16 bit Fantasy & Adventure (2025)/11 - The Mighty Kingdom.wav"
+dest_files=["res://.godot/imported/11 - The Mighty Kingdom.wav-3d2d5a5aca6414a99e85a9ee27b7fd8f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

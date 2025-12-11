@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://kov3e6qa5pdo"]
+
+[ext_resource type="Script" uid="uid://btjgemr6prxl0" path="res://scripts/skill_display.gd" id="1_mpekk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mpekk"]
+font_size = 24
+outline_size = 3
+outline_color = Color(0.9084083, 0.00012783527, 0.7469878, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xfr4d"]
+font_size = 32
+outline_size = 4
+outline_color = Color(0.52163893, 0.0020885859, 0.76175874, 1)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_mpekk")
+
+[node name="Skill_Name" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_mpekk")
+
+[node name="Damage_Roll" type="Label" parent="."]
+offset_left = 2.0
+offset_top = 29.0
+offset_right = 42.0
+offset_bottom = 52.0
+label_settings = SubResource("LabelSettings_xfr4d")

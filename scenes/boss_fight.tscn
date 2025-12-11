@@ -1,8 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxup8n4v6j744"]
+[gd_scene load_steps=13 format=3 uid="uid://dxup8n4v6j744"]
 
+[ext_resource type="Script" uid="uid://cijbibccn3l1g" path="res://scripts/boss_fight.gd" id="1_67f06"]
 [ext_resource type="Script" uid="uid://dyuqky6004u2x" path="res://scripts/battle_manager.gd" id="2_1hapx"]
 [ext_resource type="Script" uid="uid://u8e82gkg5jsp" path="res://scripts/dialogue/cutscene_manager.gd" id="2_7ydql"]
+[ext_resource type="AudioStream" uid="uid://bbp0fpgcpu2x" path="res://assets/Sounds/Music/xDeviruchi - 8-bit Fantasy  & Adventure Music (2021)/xDeviruchi - Decisive Battle.wav" id="3_31neg"]
+[ext_resource type="AudioStream" uid="uid://d1oefodk4tp1x" path="res://assets/Sounds/Music/xDeviruchi - 8-bit Fantasy  & Adventure Music (2021)/xDeviruchi - And The Journey Begins .wav" id="3_67f06"]
 [ext_resource type="PackedScene" uid="uid://bvedsk338f7yw" path="res://scenes/UI/SkillsColumn.tscn" id="3_85w88"]
+[ext_resource type="AudioStream" uid="uid://ujmsloxwo66m" path="res://assets/Sounds/Music/xDeviruchi - 8-bit Fantasy  & Adventure Music (2021)/xDeviruchi - The Final of The Fantasy.wav" id="5_2tdpq"]
+[ext_resource type="AudioStream" uid="uid://bo4bdflgx0v6c" path="res://assets/Sounds/Music/xDeviruchi - 16 bit Fantasy & Adventure (2025)/06 - Victory!.wav" id="5_62gkx"]
+[ext_resource type="AudioStream" uid="uid://eibe4uev5lqu" path="res://assets/Sounds/Music/xDeviruchi - 8-bit Fantasy  & Adventure Music (2021)/xDeviruchi - Mysterious Dungeon.wav" id="6_62gkx"]
 
 [sub_resource type="Theme" id="Theme_1hapx"]
 
@@ -13,6 +19,7 @@ bg_color = Color(0.8509804, 0.8509804, 0.8509804, 1)
 bg_color = Color(0.71629584, 0.7162964, 0.716296, 1)
 
 [node name="BossFight" type="Node2D"]
+script = ExtResource("1_67f06")
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -27,6 +34,10 @@ text = "BOSS FIGHT SCENE"
 
 [node name="BossFightManager" type="Node" parent="."]
 script = ExtResource("2_1hapx")
+skill_selection_music = ExtResource("5_2tdpq")
+combat_music = ExtResource("3_31neg")
+victory_music = ExtResource("5_62gkx")
+defeat_music = ExtResource("6_62gkx")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="BossFightManager"]
 
@@ -48,8 +59,20 @@ offset_top = 396.0
 offset_right = 809.0
 offset_bottom = 419.0
 
+[node name="SkillMusicPlayer" type="AudioStreamPlayer2D" parent="BossFightManager"]
+
+[node name="CombatMusicPlayer" type="AudioStreamPlayer2D" parent="BossFightManager"]
+
+[node name="VictoryMusicPlayer" type="AudioStreamPlayer2D" parent="BossFightManager"]
+
+[node name="DefeatMusicPlayer" type="AudioStreamPlayer2D" parent="BossFightManager"]
+
 [node name="CutsceneManager" type="Node" parent="."]
 script = ExtResource("2_7ydql")
+cutscene_music = ExtResource("3_67f06")
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="CutsceneManager"]
+autoplay = true
 
 [node name="SkillsColumn" parent="." instance=ExtResource("3_85w88")]
 visible = false
@@ -59,10 +82,10 @@ offset_right = -381.0
 offset_bottom = 83.0
 
 [node name="StartCombat" type="Button" parent="."]
-offset_left = 500.0
-offset_top = 142.0
-offset_right = 669.0
-offset_bottom = 235.0
+offset_left = 535.0
+offset_top = 200.0
+offset_right = 704.0
+offset_bottom = 293.0
 theme = SubResource("Theme_1hapx")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.017732361, 0.01773239, 0.017732479, 1)

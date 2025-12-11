@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://le6pqdt2bkxj"
+path="res://.godot/imported/xDeviruchi - Title Theme .wav-c54290085e08aac0a64b4402418d28f3.sample"
+
+[deps]
+
+source_file="res://assets/Sounds/Music/xDeviruchi - 8-bit Fantasy  & Adventure Music (2021)/xDeviruchi - Title Theme .wav"
+dest_files=["res://.godot/imported/xDeviruchi - Title Theme .wav-c54290085e08aac0a64b4402418d28f3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

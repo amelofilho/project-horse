@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://byl3v7m5f4ont"
+path="res://.godot/imported/xDeviruchi - Exploring The Unknown.wav-dcba9afe9d649d03f523cd580c8dbd79.sample"
+
+[deps]
+
+source_file="res://assets/Sounds/Music/xDeviruchi - 8-bit Fantasy  & Adventure Music (2021)/xDeviruchi - Exploring The Unknown.wav"
+dest_files=["res://.godot/imported/xDeviruchi - Exploring The Unknown.wav-dcba9afe9d649d03f523cd580c8dbd79.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

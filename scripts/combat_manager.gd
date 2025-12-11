@@ -5,7 +5,7 @@ var players: Array[Entity] = []
 var boss: Entity
 var clash_system: ClashSystem
 
-signal direct_attack_coins(user: Entity, heads: int, total_coins: int, total_dmg: int)
+signal direct_attack_coins(user: Entity, skill_name : String, heads: int, total_coins: int, total_dmg: int)
 
 func resolve_skills(skill_queue: Array) -> void:
 	print("\n--- Resolving %d skills ---" % skill_queue.size())
@@ -59,12 +59,14 @@ func resolve_skills(skill_queue: Array) -> void:
 					loser.take_damage(damage_total)
 					skill_slot.user.play_animation("attack1")
 					skill_slot.user.is_clashing = false
+					opposing_slot.user.is_clashing = false
 					print("%s takes %d clash damage!" % [loser.name, damage_total])
 				else:
 					var loser: Entity = skill_slot.user
 					loser.take_damage(damage_total)
 					opposing_slot.user.play_animation("attack1")
 					opposing_slot.user.is_clashing = false
+					skill_slot.user.is_clashing = false
 					print("%s takes %d clash damage!" % [loser.name, damage_total])
 			
 			await get_tree().create_timer(1).timeout
@@ -84,7 +86,7 @@ func resolve_skills(skill_queue: Array) -> void:
 			var heads := int(dmg_detail["heads"])
 			var total_coins := int(skill_slot.skill.coins)
 			
-			emit_signal("direct_attack_coins", skill_slot.user, heads, total_coins, dmg)
+			emit_signal("direct_attack_coins", skill_slot.user, skill_slot.skill.name, heads, total_coins, dmg)
 			
 			#wait for coin animation
 			await get_tree().create_timer(2.5).timeout
