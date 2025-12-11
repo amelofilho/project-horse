@@ -103,22 +103,6 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 color = Color(0.00011382803, 0.00011382803, 0.00011382803, 1)
 
-[node name="SpeedBG" type="ColorRect" parent="LayoutAnchorFixer/TripleCol/Column1"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 343.0
-offset_right = 123.0
-offset_bottom = 377.0
-color = Color(0.8735121, 0.6851966, 7.70092e-07, 1)
-
-[node name="SpeedValue" type="Label" parent="LayoutAnchorFixer/TripleCol/Column1/SpeedBG"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 5.0
-offset_right = 85.0
-offset_bottom = 28.0
-text = "Speed: 8"
-
 [node name="Column2" type="Control" parent="LayoutAnchorFixer/TripleCol"]
 anchors_preset = 0
 offset_left = 56.0
@@ -159,22 +143,6 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 color = Color(0.00011382803, 0.00011382803, 0.00011382803, 1)
 
-[node name="SpeedBG" type="ColorRect" parent="LayoutAnchorFixer/TripleCol/Column2"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 343.0
-offset_right = 265.0
-offset_bottom = 377.0
-color = Color(0.8735121, 0.6851966, 7.70092e-07, 1)
-
-[node name="SpeedValue" type="Label" parent="LayoutAnchorFixer/TripleCol/Column2/SpeedBG"]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 5.0
-offset_right = 88.0
-offset_bottom = 28.0
-text = "Speed: 8"
-
 [node name="Column3" type="Control" parent="LayoutAnchorFixer/TripleCol"]
 anchors_preset = 0
 offset_left = 56.0
@@ -214,22 +182,6 @@ color = Color(0.00011382803, 0.00011382803, 0.00011382803, 1)
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 color = Color(0.00011382803, 0.00011382803, 0.00011382803, 1)
-
-[node name="SpeedBG" type="ColorRect" parent="LayoutAnchorFixer/TripleCol/Column3"]
-layout_mode = 0
-offset_left = 290.0
-offset_top = 343.0
-offset_right = 405.0
-offset_bottom = 377.0
-color = Color(0.8735121, 0.6851966, 7.70092e-07, 1)
-
-[node name="SpeedValue" type="Label" parent="LayoutAnchorFixer/TripleCol/Column3/SpeedBG"]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 5.0
-offset_right = 88.0
-offset_bottom = 28.0
-text = "Speed: 8"
 
 [node name="BlockButton1" type="Control" parent="LayoutAnchorFixer/TripleCol"]
 anchors_preset = 0

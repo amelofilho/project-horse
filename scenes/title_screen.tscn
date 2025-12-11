@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://qln4pk71gpli"]
+[gd_scene load_steps=6 format=3 uid="uid://qln4pk71gpli"]
 
 [ext_resource type="Script" uid="uid://b52ptuas6upr" path="res://scripts/title/start_button.gd" id="1_fgkus"]
-[ext_resource type="Script" uid="uid://dxr5wynvcs2hs" path="res://scripts/title_screen.gd" id="1_sa3yf"]
+[ext_resource type="Script" path="res://scripts/title_screen.gd" id="1_sa3yf"]
 [ext_resource type="AudioStream" uid="uid://le6pqdt2bkxj" path="res://assets/Sounds/Music/xDeviruchi - 8-bit Fantasy  & Adventure Music (2021)/xDeviruchi - Title Theme .wav" id="2_s4lrb"]
+[ext_resource type="Texture2D" uid="uid://bxhn2jwjlisde" path="res://assets/UI_Visuals/custom_drawing/cover_page.png" id="4_mgrm8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fgkus"]
 font_size = 48
@@ -10,6 +11,10 @@ font_size = 48
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_sa3yf")
 menu_music = ExtResource("2_s4lrb")
+
+[node name="BgImg" type="Sprite2D" parent="."]
+scale = Vector2(0.71, 0.749)
+texture = ExtResource("4_mgrm8")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -346.0
@@ -34,4 +39,3 @@ script = ExtResource("1_fgkus")
 autoplay = true
 
 [connection signal="pressed" from="StartButton" to="StartButton" method="_on_pressed"]
-

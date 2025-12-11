@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cx7tgrnoybqwr"]
+[gd_scene load_steps=28 format=3 uid="uid://cx7tgrnoybqwr"]
 
 [ext_resource type="Script" uid="uid://d1654oremtomk" path="res://scripts/entities/player.gd" id="1_n6ogg"]
 [ext_resource type="Texture2D" uid="uid://co2pytill8lqn" path="res://assets/UI_Visuals/sprites/red-Sheet.png" id="2_uslr3"]
@@ -10,6 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://dsnlxit2ht1x7" path="res://assets/UI_Visuals/Skills_Icons/light_attack.png" id="7_uslr3"]
 [ext_resource type="Texture2D" uid="uid://ccapfxxjtvyfw" path="res://assets/UI_Visuals/Skills_Icons/melee_buff.png" id="8_ev13c"]
 [ext_resource type="Texture2D" uid="uid://xaau4uqcyrlx" path="res://assets/UI_Visuals/Skills_Icons/heavy_melee.png" id="9_n4wb3"]
+[ext_resource type="PackedScene" uid="uid://clyedtoyppy0u" path="res://scenes/UI/speed_display.tscn" id="11_ev13c"]
+[ext_resource type="AudioStream" uid="uid://df3sb03rjcsnl" path="res://assets/Sounds/Audio/samurai-slash-6845.mp3" id="12_n4wb3"]
+[ext_resource type="AudioStream" uid="uid://cpkstl3imvr1l" path="res://assets/Sounds/Audio/glass-ting-89283.mp3" id="13_7kdnf"]
+[ext_resource type="AudioStream" uid="uid://gmb20dqs7sdl" path="res://assets/Sounds/Audio/sword-blade-slicing-flesh-352708.mp3" id="14_ryrs4"]
+[ext_resource type="AudioStream" uid="uid://cgu4oimtc4b24" path="res://assets/Sounds/Audio/slash-21834.mp3" id="15_70r1h"]
 
 [sub_resource type="Animation" id="Animation_ev13c"]
 resource_name = "RESET"
@@ -26,22 +31,6 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_oac6y"]
-resource_name = "Attack_1"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.4057713, 0.46666667, 0.53333336),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [25, 26, 27, 28, 29, 28, 27, 26]
-}
-
 [sub_resource type="Animation" id="Animation_uslr3"]
 resource_name = "clash"
 length = 0.1
@@ -56,7 +45,117 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [26]
+"values": [17]
+}
+
+[sub_resource type="Animation" id="Animation_de7et"]
+resource_name = "combo1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.4013986, 0.5013986, 0.5680653, 0.63473195, 0.7013986, 0.80139863),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"sword2"
+}, {
+"args": [],
+"method": &"sword1"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_myhlu"]
+resource_name = "combo2"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.3998245, 0.4998245, 0.59999996, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 38, 39, 36, 37, 38, 39, 40, 41]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"sword1"
+}, {
+"args": [],
+"method": &"sword2"
+}, {
+"args": [],
+"method": &"sword1"
+}, {
+"args": [],
+"method": &"sword2"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_lqdtf"]
+resource_name = "combo3"
+length = 1.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.7, 0.8, 0.9001754, 1.0001755, 1.1001754, 1.2001755),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 0.7, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"sword2"
+}, {
+"args": [],
+"method": &"sword1"
+}, {
+"args": [],
+"method": &"sword2"
+}, {
+"args": [],
+"method": &"sword1"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_7kdnf"]
@@ -75,6 +174,36 @@ tracks/0/keys = {
 "values": [9, 10, 11, 12, 13, 14]
 }
 
+[sub_resource type="Animation" id="Animation_70r1h"]
+resource_name = "guard"
+length = 0.65
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ting"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_n4wb3"]
 resource_name = "Idle"
 loop_mode = 1
@@ -91,12 +220,77 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
 
+[sub_resource type="Animation" id="Animation_ryrs4"]
+resource_name = "attack2"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.16666667, 0.23333333, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [30, 31, 32, 33, 34, 35]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"sword1"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_oac6y"]
+resource_name = "Attack_1"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.4, 0.46666667, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [25, 26, 27, 28, 29, 28, 27, 26]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"sword2"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ryrs4"]
 _data = {
 &"RESET": SubResource("Animation_ev13c"),
-&"attack1": SubResource("Animation_oac6y"),
+&"attack1": SubResource("Animation_ryrs4"),
+&"attack2": SubResource("Animation_oac6y"),
 &"clash": SubResource("Animation_uslr3"),
+&"combo1": SubResource("Animation_de7et"),
+&"combo2": SubResource("Animation_myhlu"),
+&"combo3": SubResource("Animation_lqdtf"),
 &"damaged": SubResource("Animation_7kdnf"),
+&"guard": SubResource("Animation_70r1h"),
 &"idle": SubResource("Animation_n4wb3")
 }
 
@@ -106,6 +300,10 @@ height = 408.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_n6ogg")
+current_hp = 120.0
+max_hp = 120.0
+speed_low = 4.0
+speed_high = 7.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -121,7 +319,7 @@ shape = SubResource("CapsuleShape2D_sh265")
 position = Vector2(151, 48.999996)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_uslr3")
-hframes = 6
+hframes = 7
 vframes = 6
 
 [node name="SkillsBar" parent="." instance=ExtResource("3_e261l")]
@@ -145,6 +343,12 @@ offset_right = -384.0
 offset_bottom = 315.0
 scale = Vector2(0.8, 0.8)
 
+[node name="SpeedDisplay" parent="." instance=ExtResource("11_ev13c")]
+offset_left = -60.0
+offset_top = 590.0
+offset_right = -60.0
+offset_bottom = 590.0
+
 [node name="Name" type="Label" parent="."]
 offset_left = -63.0
 offset_top = 296.0
@@ -161,8 +365,8 @@ script = ExtResource("6_c8oo2")
 skill_id = 1
 skill_name = "Moon Splitting Draw"
 description = "[On Head]: Gain 2 Adrenaline"
-base_roll = 3.0
-bonus_roll = 4.0
+base_roll = 18.0
+bonus_roll = 6.0
 coins = 2
 icon_texture = ExtResource("7_uslr3")
 copies_in_deck = 6
@@ -174,8 +378,8 @@ script = ExtResource("6_c8oo2")
 skill_id = 2
 skill_name = "Red Rose Petals Scatter"
 description = "[On Use]: Consume 2 Adrenaline to deal 2 bonus DMG."
-base_roll = 3.0
-bonus_roll = 5.0
+base_roll = 5.0
+bonus_roll = 12.0
 coins = 3
 odds = 0.6
 icon_texture = ExtResource("8_ev13c")
@@ -189,10 +393,28 @@ skill_id = 3
 skill_name = "To Bring You Rest"
 description = "[On Head]: Consume one Adrenaline to critically strike, dealing an extra 20% Total DMG (this effect can stack)."
 base_roll = 4.0
-bonus_roll = 5.0
-coins = 5
+bonus_roll = 6.0
+coins = 4
 odds = 0.6
 icon_texture = ExtResource("9_n4wb3")
 copies_in_deck = 2
 status_type = "Adren"
 player = NodePath("../..")
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_n4wb3")
+volume_db = 3.0
+
+[node name="Guard" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_7kdnf")
+volume_db = 2.0
+pitch_scale = 2.2
+
+[node name="Sword1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_ryrs4")
+volume_db = 4.0
+pitch_scale = 0.7
+
+[node name="Sword2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_70r1h")
+volume_db = 6.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://sfsrb46ufhh0"]
+[gd_scene load_steps=25 format=3 uid="uid://sfsrb46ufhh0"]
 
 [ext_resource type="Script" uid="uid://c8xl5gilwultu" path="res://scripts/entities/boss.gd" id="1_mdhvr"]
 [ext_resource type="Texture2D" uid="uid://oc7a5cuwemxh" path="res://assets/UI_Visuals/sprites/bear-Sheet.png" id="2_t365j"]
@@ -9,6 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://dsnlxit2ht1x7" path="res://assets/UI_Visuals/Skills_Icons/light_attack.png" id="7_c3gvn"]
 [ext_resource type="Texture2D" uid="uid://ccapfxxjtvyfw" path="res://assets/UI_Visuals/Skills_Icons/melee_buff.png" id="8_5joy1"]
 [ext_resource type="Texture2D" uid="uid://xaau4uqcyrlx" path="res://assets/UI_Visuals/Skills_Icons/heavy_melee.png" id="9_woypx"]
+[ext_resource type="AudioStream" uid="uid://df3sb03rjcsnl" path="res://assets/Sounds/Audio/samurai-slash-6845.mp3" id="11_c3gvn"]
+[ext_resource type="PackedScene" uid="uid://clyedtoyppy0u" path="res://scenes/UI/speed_display.tscn" id="12_5joy1"]
+[ext_resource type="AudioStream" uid="uid://baxu0x2r4t2q6" path="res://assets/Sounds/Audio/bear-191995.mp3" id="12_woypx"]
 
 [sub_resource type="Animation" id="Animation_pqlna"]
 resource_name = "RESET"
@@ -27,7 +30,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_woypx"]
 resource_name = "roar"
-length = 0.5
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,10 +38,24 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [12, 13, 14, 15, 16]
+"values": [12, 13, 14, 15, 16, 13, 12, 11]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"roar"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_t365j"]
@@ -89,11 +106,93 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
 
+[sub_resource type="Animation" id="Animation_g0bfu"]
+resource_name = "combo1"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16, 13, 12, 11]
+}
+
+[sub_resource type="Animation" id="Animation_ssu7g"]
+resource_name = "combo2"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16, 13, 12, 11]
+}
+
+[sub_resource type="Animation" id="Animation_phd7l"]
+resource_name = "combo3"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16, 13, 12, 11]
+}
+
+[sub_resource type="Animation" id="Animation_mboqh"]
+resource_name = "attack2"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16, 13, 12, 11]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"roar"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5joy1"]
 _data = {
 &"RESET": SubResource("Animation_pqlna"),
 &"attack1": SubResource("Animation_woypx"),
+&"attack2": SubResource("Animation_mboqh"),
 &"clash": SubResource("Animation_t365j"),
+&"combo1": SubResource("Animation_g0bfu"),
+&"combo2": SubResource("Animation_ssu7g"),
+&"combo3": SubResource("Animation_phd7l"),
 &"damaged": SubResource("Animation_5joy1"),
 &"idle": SubResource("Animation_c3gvn")
 }
@@ -106,9 +205,10 @@ size = Vector2(432, 295)
 
 [node name="Boss" type="CharacterBody2D"]
 script = ExtResource("1_mdhvr")
-current_hp = 100.0
-max_hp = 100.0
-speed = 4.0
+current_hp = 400.0
+max_hp = 400.0
+speed_low = 6.0
+speed_high = 9.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -147,49 +247,55 @@ offset_bottom = 252.0
 scale = Vector2(0.6, 0.6)
 metadata/_edit_vertical_guides_ = [0.0, 1920.0, 990.0]
 
+[node name="SpeedDisplay" parent="." instance=ExtResource("12_5joy1")]
+offset_left = -60.0
+offset_top = 590.0
+offset_right = -60.0
+offset_bottom = 590.0
+
 [node name="SkillContainer" type="Node" parent="."]
 script = ExtResource("5_t365j")
 
 [node name="Skill1" type="Node" parent="SkillContainer"]
 script = ExtResource("6_pqlna")
 skill_id = 1
+skill_name = "Pulverizing Fangs"
 description = "Boss Attack #1"
-base_roll = 5.0
+base_roll = 20.0
 bonus_roll = 10.0
+coins = 2
+odds = 0.4
 icon_texture = ExtResource("7_c3gvn")
 
 [node name="Skill2" type="Node" parent="SkillContainer"]
 script = ExtResource("6_pqlna")
 skill_id = 2
+skill_name = "Frigid Claws"
 description = "Boss Attack #2"
-base_roll = 5.0
-bonus_roll = 10.0
+base_roll = 4.0
+bonus_roll = 16.0
+coins = 2
+odds = 0.6
 icon_texture = ExtResource("8_5joy1")
 
 [node name="Skill3" type="Node" parent="SkillContainer"]
 script = ExtResource("6_pqlna")
 skill_id = 3
+skill_name = "Whopping Charge"
 description = "Boss Attack #3"
-base_roll = 5.0
-bonus_roll = 10.0
+base_roll = 15.0
+bonus_roll = 12.0
+coins = 3
+odds = 0.3
 icon_texture = ExtResource("9_woypx")
 
-[node name="Skill4" type="Node" parent="SkillContainer"]
-script = ExtResource("6_pqlna")
-skill_id = 4
-description = "Boss Attack #4"
-base_roll = 5.0
-bonus_roll = 10.0
-icon_texture = ExtResource("9_woypx")
+[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_c3gvn")
+volume_db = 3.0
 
-[node name="Skill5" type="Node" parent="SkillContainer"]
-script = ExtResource("6_pqlna")
-skill_id = 5
-description = "Boss Attack #5
-"
-base_roll = 10.0
-bonus_roll = 15.0
-icon_texture = ExtResource("9_woypx")
+[node name="Roar" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_woypx")
+volume_db = 4.0
 
 [connection signal="mouse_entered" from="HoverArea" to="." method="_on_hover_area_mouse_entered"]
 [connection signal="mouse_exited" from="HoverArea" to="." method="_on_hover_area_mouse_exited"]
