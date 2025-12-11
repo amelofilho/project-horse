@@ -296,7 +296,8 @@ deliverables, project
 planning was discussed as a part of class during lectures regarding the project and tools you can use to help with the
 process.
 
-There were troubles with the team hitting milestones with most of the additions coming in at the eleventh hour. I should've made the decision to have the team pivot to an idea
+There were troubles with the team hitting milestones with most of the additions coming in at the eleventh hour. I
+should've made the decision to have the team pivot to an idea
 that better fit the team's capabilities/schedules, but the team wanted to stick with the current game plan and I went
 against my gut judgement.
 
@@ -346,6 +347,10 @@ independently of each other. This system is based on portion of the course that 
 systems (specifically the part that covered states).
 
 <img src="DocImages/high-level-1.jpeg" width="500"/>
+
+Initial Game Plan/Design - I drove a lot of the conversation regarding potential ideas for what game we should
+make, which led into eventually creating the idea that would become BRR. I'm kind of sad a lot of game design elements
+created by myself and the team never came to fruition, but that's just how things go sometimes.
 
 Code Review - Reviewed all code being PR'ed and made comments on changes that needed to be made to prevent potential
 problems compounding in the future.
